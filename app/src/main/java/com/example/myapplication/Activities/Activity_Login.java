@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Activity_Login extends AppCompatActivity {
     EditText txtUsername, txtPassword;
     TextView btnSignup;
-    Button btnLogin;
+    TextView btnLogin;
     RetrofitService retrofitService;
 
     @Override
