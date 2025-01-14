@@ -3,7 +3,7 @@ package com.example.myapplication.Models;
 import java.util.ArrayList;
 
 public class ResPhone {
-    private float phoneID;
+    private String phoneID;
     private ArrayList<String> image;
     private ArrayList<String> phoneColor;
     private String phoneName;
@@ -18,7 +18,7 @@ public class ResPhone {
 
     public ResPhone() {
     }
-    public ResPhone(float phoneID, ArrayList<String> image, ArrayList<String> phoneColor, String phoneName, float phonePrice, float phoneBrand, float phoneType, int phoneSold, String phoneDescription, int phoneStock, int phoneWarranty, int phoneInStore) {
+    public ResPhone(String phoneID, ArrayList<String> image, ArrayList<String> phoneColor, String phoneName, float phonePrice, float phoneBrand, float phoneType, int phoneSold, String phoneDescription, int phoneStock, int phoneWarranty, int phoneInStore) {
         this.phoneID = phoneID;
         this.image = image;
         this.phoneColor = phoneColor;
@@ -33,11 +33,11 @@ public class ResPhone {
         this.phoneInStore = phoneInStore;
     }
 
-    public float getPhoneID() {
+    public String getPhoneID() {
         return phoneID;
     }
 
-    public void setPhoneID(float phoneID) {
+    public void setPhoneID(String phoneID) {
         this.phoneID = phoneID;
     }
 
