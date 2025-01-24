@@ -24,9 +24,10 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/profile"
             android:contentDescription="Ảnh đại diện"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:background="@drawable/profile" />
+
 
         <!-- Thông tin người dùng -->
         <LinearLayout
@@ -141,19 +142,21 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#E0E0E0" />
-
-        <!-- Đăng xuất -->
-        <ImageButton
-            android:id="@+id/logout"
-            android:layout_width="205dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:contentDescription="Đăng xuất" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#E0E0E0" />
     </LinearLayout>
 
+    <!-- Nút Đăng Xuất -->
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="152dp"
+        android:background="@android:color/transparent"
+
+        android:text="Đăng xuất"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
