@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+        <activity
+            android:name=".Activities.Activity_ProductCommentsSection"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Activity_ProductDetail"
+            android:exported="false" />
         <activity
             android:name=".Activities.Activity_Search"
             android:exported="false" />
@@ -28,7 +34,7 @@
         </activity>
         <activity
             android:name=".Activities.Main"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>
