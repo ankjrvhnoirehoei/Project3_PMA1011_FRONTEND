@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="@android:color/black">
+
+    <!-- Số thứ tự - Màu xanh lá -->
+    <TextView
+        android:id="@+id/txtSerial"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="4dp"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@android:color/white">
+
+        <!-- Tên Voucher - Màu đỏ -->
+        <TextView
+            android:id="@+id/txtVoucherInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@android:color/holo_red_light"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <!-- Số tiền giảm - Màu vàng -->
+        <TextView
+            android:id="@+id/txtVoucherDiscount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@android:color/holo_orange_light"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

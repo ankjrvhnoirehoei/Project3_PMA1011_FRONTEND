@@ -67,17 +67,5 @@ public class Main extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.toolbarNotification) {
 
-            return true;
-
-        } else if (item.getItemId() == R.id.toolbarSearch) {
-            startActivity(new Intent(Main.this, Activity_Search.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

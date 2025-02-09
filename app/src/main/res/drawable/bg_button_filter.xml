@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <corners android:radius="30dp"/>
+            <solid android:color="#512DA8"/>  <!-- Màu tím đậm khi bấm -->
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <corners android:radius="30dp"/>
+            <solid android:color="#9575CD"/>  <!-- Màu tím nhạt mặc định -->
+        </shape>
+    </item>
+</selector>

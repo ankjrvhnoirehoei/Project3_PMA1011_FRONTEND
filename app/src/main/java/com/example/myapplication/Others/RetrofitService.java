@@ -1,6 +1,10 @@
 package com.example.myapplication.Others;
 
+import com.example.myapplication.Models.ReqEditUser;
+import com.example.myapplication.Models.ReqGetUser;
 import com.example.myapplication.Models.ReqLogin;
+import com.example.myapplication.Models.ResEditUser;
+import com.example.myapplication.Models.ResGetUser;
 import com.example.myapplication.Models.ResLogin;
 import com.example.myapplication.Models.ResPhone;
 
@@ -22,4 +26,10 @@ public interface RetrofitService {
     // get all phones
     @GET("phones/home")
     Call<List<ResPhone>> getAllPhones(@Header("Authorization") String token);  // Add the token header
+
+    @POST("users/edit")
+    Call<ResEditUser> editUser(@Header("Authorization") String token, @Body ReqEditUser reqEditUser);
+
+    @GET("users/user")
+    Call<ResGetUser> get1user(@Header("Authorization") String token, @Body ReqGetUser reqGetUser);
 }

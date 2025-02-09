@@ -15,25 +15,49 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".Activities.Activity_UserProfile"
+<<<<<<< Updated upstream
+            android:name=".Activities.Activity_Order_History"
             android:exported="true" >
+=======
+            android:name=".Activities.Activity_Voucher"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".Activities.Activity_UserProfile"
+            android:exported="true" />
         <activity
             android:name=".Activities.Activity_fragment_user"
             android:exported="true">
+>>>>>>> Stashed changes
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Activities.Activity_voucher"
+            android:exported="true"></activity>
+        <activity
+            android:name=".Activities.Activity_UserProfile"
+            android:exported="true" />
+        <activity
+            android:name=".Activities.Activity_fragment_user"
+            android:exported="true"></activity>
         <activity
             android:name=".Activities.Activity_Search"
             android:exported="true" />
         <activity
             android:name=".Activities.Activity_Login"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Activities.Main"
             android:exported="false" />
