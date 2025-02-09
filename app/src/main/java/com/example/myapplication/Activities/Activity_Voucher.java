@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Activity_oucher extends AppCompatActivity {
+public class Activity_Voucher extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Adapter_voucher adapter;
     private List<Voucher> voucherList;
