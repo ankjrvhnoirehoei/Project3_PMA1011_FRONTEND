@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_item_border_white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtUsername"
+                    android:text="sample"
+                    android:textColor="#275f90"
+                    android:textStyle="bold"
+                    android:layout_marginHorizontal="8dp"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtBillTotal"
+                    android:text="sample"
+                    android:textColor="#932f1f"
+                    android:textStyle="bold"
+                    android:layout_marginHorizontal="8dp"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnViewBillDetails"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:text="Xem chi tiết đơn hàng"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/search_bar"
+                android:textSize="15sp"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
