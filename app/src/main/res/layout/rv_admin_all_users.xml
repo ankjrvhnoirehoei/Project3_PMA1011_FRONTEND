@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_item_border_white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="8">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:weightSum="5">
+
+                    <ImageView
+                        android:id="@+id/imgAvatar"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"
+                        android:src="@drawable/user"
+                        android:scaleType="centerInside"
+                        android:adjustViewBounds="true"
+                        android:layout_weight="1"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="4"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtUsername"
+                            android:text="sample"
+                            android:textColor="@color/black"
+                            android:layout_marginHorizontal="8dp"
+                            android:textSize="20sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtPassword"
+                            android:text="sample"
+                            android:layout_marginHorizontal="8dp"
+                            android:textSize="18sp"
+                            android:textColor="#cd0a1c"
+                            android:layout_marginBottom="5dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtPhoneNumber"
+                    android:text="sample"
+                    android:textColor="@color/black"
+                    android:layout_marginHorizontal="8dp"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtAddress"
+                    android:text="sample"
+                    android:textColor="@color/black"
+                    android:layout_marginHorizontal="8dp"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="3"
+                android:padding="2dp">
+
+                <TextView
+                    android:id="@+id/btnViewSales"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:text="Xem đơn hàng"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:background="@drawable/search_bar"
+                    android:textSize="15sp"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/btnStarredUser"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:text="Yêu thích"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_fav_users_admin"
+                    android:textSize="15sp"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/btnBanUser"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:text="Xóa tài khoản"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_ban_user_admin"
+                    android:textSize="15sp"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

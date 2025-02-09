@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_item_border_white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="8">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtPhoneName"
+                        android:text="sample"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="8dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtPhonePrice"
+                        android:text="sample"
+                        android:layout_marginHorizontal="8dp"
+                        android:textSize="18sp"
+                        android:textColor="#cd0a1c"
+                        android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtPhoneStock"
+                    android:text="sample"
+                    android:textColor="@color/black"
+                    android:layout_marginHorizontal="8dp"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtPhoneSold"
+                    android:text="sample"
+                    android:textColor="@color/black"
+                    android:layout_marginHorizontal="8dp"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="3"
+                android:padding="2dp">
+
+                <TextView
+                    android:id="@+id/btnViewPhoneDetails"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:text="Xem chi tiết"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_fav_users_admin"
+                    android:textSize="15sp"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/btnStopSelling"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ngừng bán"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_ban_user_admin"
+                    android:textSize="15sp"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
