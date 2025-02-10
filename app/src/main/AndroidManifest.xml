@@ -21,6 +21,9 @@
             android:name=".Activities.Activity_ProductDetail"
             android:exported="false" />
         <activity
+            android:name=".Activities.Activity_Admin_Main"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Activity_Search"
             android:exported="false" />
         <activity

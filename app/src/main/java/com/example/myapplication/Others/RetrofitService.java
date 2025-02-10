@@ -9,18 +9,32 @@ import com.example.myapplication.Models.ReqRating;
 import com.example.myapplication.Models.ResAddComment;
 import com.example.myapplication.Models.ResAddRating;
 import com.example.myapplication.Models.ResComment;
+import com.example.myapplication.Models.ReqSignup;
+import com.example.myapplication.Models.ReqUser;
+import com.example.myapplication.Models.ResBill;
+import com.example.myapplication.Models.ResBillsFull;
 import com.example.myapplication.Models.ResLogin;
 import com.example.myapplication.Models.ResOnePhone;
 import com.example.myapplication.Models.ResPhone;
 import com.example.myapplication.Models.ResRating;
+import com.example.myapplication.Models.ResSignup;
+import com.example.myapplication.Models.ResUser;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
+import retrofit2.http.Query;
 
 public interface RetrofitService {
     public static final String BASE_URL = "https://project3-pma1011-backend.onrender.com";
@@ -28,6 +42,10 @@ public interface RetrofitService {
     // login api
     @POST("users/login")
     Call<ResLogin> Login(@Body ReqLogin reqLogin);
+
+    // signup api
+    @POST("users/signup")
+    Call<ResSignup> signup(@Body ReqSignup reqSignup);
 
     // get all phones
     @GET("phones/home")
@@ -52,4 +70,38 @@ public interface RetrofitService {
     // add rating for a phone by userID
     @POST("comments/comment")
     Call<ResAddComment> addComment(@Header("Authorization") String token, @Body ReqAddComment reqAddComment);
+
+    // get all users
+    @GET("users/allUsers")
+    Call<List<ResUser>> getAllUsers(@Header("Authorization") String token);
+
+    // find a user by name or address
+    @GET("users/findUsers")
+    Call<List<ResUser>> findUsers(
+            @Header("Authorization") String authToken,  // Bearer token authorization
+            @Query("searchUsers") String searchUsers    // Query parameter for username or address
+    );
+
+    // sort all users by bought amount, cancelled amount or voucher owned
+    @GET("users/sort")
+    Call<List<ResUser>> sortUsers(
+            @Header("Authorization") String token,   // Pass Authorization token
+            @Query("sortBy") String sortBy          // Query parameter for sorting field
+    );
+
+    // edit a user's information
+    @Multipart
+    @POST("users/edit")
+    Call<ResUser> editUserInfo(
+            @Header("Authorization") String token, // For passing the Bearer token
+            @PartMap Map<String, RequestBody> partMap, // For handling dynamic optional fields
+            @Part MultipartBody.Part avatarImg // For handling image uploads
+    );
+
+    // get all bills from a user
+    @GET("bills/userBill")
+    Call<ResBillsFull> getUserBills(
+            @Header("Authorization") String authToken,
+            @Query("userID") String userID
+    );
 }
