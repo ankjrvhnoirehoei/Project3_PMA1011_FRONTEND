@@ -8,8 +8,8 @@ public class ResPhone {
     private ArrayList<String> phoneColor;
     private String phoneName;
     private float phonePrice;
-    private float phoneBrand;
-    private float phoneType;
+    private String phoneBrand;
+    private String phoneType;
     private int phoneSold;
     private String phoneDescription;
     private int phoneStock;
@@ -18,7 +18,7 @@ public class ResPhone {
 
     public ResPhone() {
     }
-    public ResPhone(String phoneID, ArrayList<String> image, ArrayList<String> phoneColor, String phoneName, float phonePrice, float phoneBrand, float phoneType, int phoneSold, String phoneDescription, int phoneStock, int phoneWarranty, int phoneInStore) {
+    public ResPhone(String phoneID, ArrayList<String> image, ArrayList<String> phoneColor, String phoneName, float phonePrice, String phoneBrand, String phoneType, int phoneSold, String phoneDescription, int phoneStock, int phoneWarranty, int phoneInStore) {
         this.phoneID = phoneID;
         this.image = image;
         this.phoneColor = phoneColor;
@@ -73,19 +73,19 @@ public class ResPhone {
         this.phonePrice = phonePrice;
     }
 
-    public float getPhoneBrand() {
+    public String getPhoneBrand() {
         return phoneBrand;
     }
 
-    public void setPhoneBrand(float phoneBrand) {
+    public void setPhoneBrand(String phoneBrand) {
         this.phoneBrand = phoneBrand;
     }
 
-    public float getPhoneType() {
+    public String getPhoneType() {
         return phoneType;
     }
 
-    public void setPhoneType(float phoneType) {
+    public void setPhoneType(String phoneType) {
         this.phoneType = phoneType;
     }
 
