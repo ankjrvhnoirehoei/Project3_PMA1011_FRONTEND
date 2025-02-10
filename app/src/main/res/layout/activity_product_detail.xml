@@ -33,35 +33,40 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="10dp"
-                android:src="@drawable/no_image" />
+                android:src="@drawable/no_image"
+                android:clickable="true"/>
             <ImageView
                 android:id="@+id/productImage2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="10dp"
-                android:src="@drawable/no_image" />
+                android:src="@drawable/no_image"
+                android:clickable="true"/>
             <ImageView
                 android:id="@+id/productImage3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="10dp"
-                android:src="@drawable/no_image" />
+                android:src="@drawable/no_image"
+                android:clickable="true"/>
             <ImageView
                 android:id="@+id/productImage4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="10dp"
-                android:src="@drawable/no_image" />
+                android:src="@drawable/no_image"
+                android:clickable="true"/>
             <ImageView
                 android:id="@+id/productImage5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="10dp"
-                android:src="@drawable/no_image" />
+                android:src="@drawable/no_image"
+                android:clickable="true"/>
         </LinearLayout>
 
         <TextView
@@ -89,17 +94,28 @@
                 android:layout_weight="1"
                 android:text="phonePrice"
                 android:textColor="#ff0000"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textStyle="bold"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:clickable="true">
+                <ImageView
+                    android:id="@+id/ratingImage"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/rating_star"
+                    android:clickable="true"/>
                 <TextView
+                    android:id="@+id/tv_productRating"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="averageRating"
-                    android:textSize="20sp"/>
+                    android:text="phoneRating"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:clickable="true"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -119,6 +135,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/tv_productBrand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="phoneBrand"
@@ -126,6 +143,7 @@
                     android:textSize="16sp"
                     android:textStyle="bold"/>
                 <TextView
+                    android:id="@+id/tv_productType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="phoneType"
@@ -133,6 +151,7 @@
                     android:textSize="16sp"
                     android:textStyle="bold"/>
                 <TextView
+                    android:id="@+id/tv_productDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="phoneDescription"
@@ -141,6 +160,7 @@
             </LinearLayout>
         </ScrollView>
         <Button
+            android:id="@+id/bt_commentSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"

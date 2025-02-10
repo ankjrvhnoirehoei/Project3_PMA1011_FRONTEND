@@ -1,8 +1,16 @@
 package com.example.myapplication.Others;
 
+import com.example.myapplication.Models.ReqAddComment;
+import com.example.myapplication.Models.ReqAddRating;
+import com.example.myapplication.Models.ReqComment;
 import com.example.myapplication.Models.ReqLogin;
+import com.example.myapplication.Models.ReqOnePhone;
+import com.example.myapplication.Models.ReqRating;
+import com.example.myapplication.Models.ResAddComment;
+import com.example.myapplication.Models.ResAddRating;
 import com.example.myapplication.Models.ResComment;
 import com.example.myapplication.Models.ResLogin;
+import com.example.myapplication.Models.ResOnePhone;
 import com.example.myapplication.Models.ResPhone;
 import com.example.myapplication.Models.ResRating;
 
@@ -25,11 +33,23 @@ public interface RetrofitService {
     @GET("phones/home")
     Call<List<ResPhone>> getAllPhones(@Header("Authorization") String token);  // Add the token header
 
+    // get a phone detail by phone id
+    @GET("phones/onePhone")
+    Call<ResOnePhone> getOnePhone(@Header("Authorization") String token, @Body ReqOnePhone reqOnePhone);
+
     // get all comments for a phone by id
     @GET("comments/phoneComment")
-    Call<List<ResComment>> getAllCommentsForPhone(@Header("Authorization") String token);
+    Call<ResComment> getAllCommentsForPhone(@Header("Authorization") String token, @Body ReqComment reqComment);
 
-    // get average rating point for a phone by id
+    // get rating point for a phone by id
     @GET("ratings/phoneRating")
-    Call<List<ResRating>> getAvgRatingForPhone(@Header("Authorization") String token);
+    Call<ResRating> getRatingForPhone(@Header("Authorization") String token, @Body ReqRating reqRating);
+
+    // add comment for a phone by userID
+    @POST("ratings/rate")
+    Call<ResAddRating> addRating(@Header("Authorization") String token, @Body ReqAddRating reqAddRating);
+
+    // add rating for a phone by userID
+    @POST("comments/comment")
+    Call<ResAddComment> addComment(@Header("Authorization") String token, @Body ReqAddComment reqAddComment);
 }

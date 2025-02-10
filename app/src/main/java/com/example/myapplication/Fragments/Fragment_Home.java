@@ -2,6 +2,7 @@ package com.example.myapplication.Fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.myapplication.Activities.Activity_ProductDetail;
 import com.example.myapplication.Adapters.Adapter_Home_All_Phones;
 import com.example.myapplication.Models.ResPhone;
 import com.example.myapplication.Others.RetrofitService;
@@ -31,6 +33,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Fragment_Home extends Fragment {
     RecyclerView rvPhone;
     Adapter_Home_All_Phones adapterHomeAllPhones;
+    Adapter_Home_All_Phones.OnClickListener listener;
+    ArrayList<ResPhone> phoneList;
+    SharedPreferences preferences;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,7 +49,7 @@ public class Fragment_Home extends Fragment {
                 .baseUrl(RetrofitService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        SharedPreferences preferences = requireContext().getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        preferences = requireContext().getSharedPreferences("AppPrefs", MODE_PRIVATE);
         String token = preferences.getString("AuthToken", null);
 
         if (token != null) {
@@ -60,9 +65,10 @@ public class Fragment_Home extends Fragment {
                         // Set the adapter with the retrieved movie list
                         Log.d("Response", "Phones received: " + response.body().size());
                         Log.d("Phones List", response.body().toString());
-                        ArrayList<ResPhone> phoneList = new ArrayList<>(response.body());
-                            Adapter_Home_All_Phones adapter = new Adapter_Home_All_Phones(getContext(), phoneList);
+                        phoneList = new ArrayList<>(response.body());
+                            Adapter_Home_All_Phones adapter = new Adapter_Home_All_Phones(getContext(), phoneList, listener);
                         rvPhone.setAdapter(adapter);
+
                     } else {
                         Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
                     }
@@ -79,5 +85,19 @@ public class Fragment_Home extends Fragment {
         }
 
         return v;
+    }
+    private void setOnClickListener(){
+        listener = new Adapter_Home_All_Phones.OnClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                Intent i = new Intent(getContext(), Activity_ProductDetail.class);
+                String phoneID = phoneList.get(position).getPhoneID();
+                preferences = requireContext().getSharedPreferences("AppPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("sharedPhoneID", phoneID);
+                editor.apply();
+                startActivity(i);
+            }
+        };
     }
 }

@@ -1,7 +1,6 @@
 package com.example.myapplication.Models;
 
 public class ReqComment {
-
     private String phoneID;
 
     public ReqComment(String phoneID) {

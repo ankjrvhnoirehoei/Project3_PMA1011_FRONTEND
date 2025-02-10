@@ -1,7 +1,6 @@
 package com.example.myapplication.Models;
 
 public class ReqRating {
-
     private String phoneID;
 
     public ReqRating(String phoneID) {
