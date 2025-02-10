@@ -1,13 +1,11 @@
-<<<<<<< Updated upstream
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp"
     android:background="@android:color/white">
 
-    <!-- Nút quay lại -->
+    <!-- Back button -->
     <LinearLayout
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
@@ -33,7 +31,7 @@
             android:textColor="@android:color/black"/>
     </LinearLayout>
 
-    <!-- Tiêu đề -->
+    <!-- Title -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +41,7 @@
         android:gravity="center"
         android:paddingBottom="8dp"/>
 
-    <!-- Spinner để chọn sắp xếp -->
+    <!-- Spinner for sorting -->
     <Spinner
         android:id="@+id/spinner_voucher"
         android:layout_width="match_parent"
@@ -51,69 +49,12 @@
         android:background="@android:color/darker_gray"
         android:padding="8dp"/>
 
-    <!-- RecyclerView hiển thị danh sách voucher -->
+    <!-- RecyclerView for displaying voucher list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_voucher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="8dp"/>
-=======
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/titleVoucher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Voucher hiện có"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"
-        android:paddingTop="8dp" />
-
-    <!-- Spinner để chọn sắp xếp -->
-    <Spinner
-        android:id="@+id/spinnerSort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:backgroundTintMode="src_over"
-        android:backgroundTint="#FFFFFF">
-
-        <!-- Khung Voucher 1 -->
-        <include layout="@layout/item_voucher_template" />
-        <!-- Khung Voucher 2 -->
-        <include layout="@layout/item_voucher_template" />
-        <!-- Khung Voucher 3 -->
-        <include layout="@layout/item_voucher_template" />
-        <!-- Khung Voucher 4 -->
-        <include layout="@layout/item_voucher_template" />
-
-    </LinearLayout>
-
-    <!-- Nút quay lại -->
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quay lại"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/transparent"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
->>>>>>> Stashed changes
 </LinearLayout>

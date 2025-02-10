@@ -6,15 +6,9 @@
             <corners android:radius="12dp"/> <!-- Bo góc -->
         </shape>
     </item>
-    <item android:state_selected="true">
-        <shape android:shape="rectangle">
-            <solid android:color="#2196F3"/> <!-- Màu xanh khi chọn -->
-            <corners android:radius="12dp"/>
-        </shape>
-    </item>
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#FFFFFF"/> <!-- Màu trắng mặc định -->
+            <solid android:color="#FFFFFF"/> <!-- Màu trắng bình thường -->
             <stroke android:width="1dp" android:color="#CCCCCC"/> <!-- Viền xám -->
             <corners android:radius="12dp"/>
         </shape>

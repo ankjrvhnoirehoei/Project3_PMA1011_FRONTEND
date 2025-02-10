@@ -1,12 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp"
-    android:background="#F5F5F5">
+    android:background="@android:color/white">
 
-    <!-- Button Group for Filtering Orders -->
+    <!-- Nút Quay lại -->
+    <LinearLayout
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/exitbutton3"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quay lại"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"/>
+    </LinearLayout>
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lịch sử đơn hàng"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="8dp"/>
+
+    <!-- Nhóm nút lọc đơn hàng -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,18 +59,18 @@
             android:layout_height="50dp"
             android:text="Tất Cả"
             android:background="@drawable/bg_button_filter"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"/>
+            android:textColor="#000000"
+            android:textSize="13sp"/>
 
         <Button
             android:id="@+id/btn_in_transit"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="50dp"
-            android:text="Đang Vận Chuyển"
+            android:text="Đang Giao"
             android:background="@drawable/bg_button_filter"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"/>
+            android:textColor="#000000"
+            android:textSize="13sp"/>
 
         <Button
             android:id="@+id/btn_canceled"
@@ -43,8 +79,8 @@
             android:layout_height="50dp"
             android:text="Đã Hủy"
             android:background="@drawable/bg_button_filter"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"/>
+            android:textColor="#000000"
+            android:textSize="13sp"/>
 
         <Button
             android:id="@+id/btn_received"
@@ -53,14 +89,15 @@
             android:layout_height="50dp"
             android:text="Đã Nhận"
             android:background="@drawable/bg_button_filter"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"/>
+            android:textColor="#000000"
+            android:textSize="13sp"/>
     </LinearLayout>
 
-    <!-- RecyclerView to Display Orders -->
+    <!-- RecyclerView hiển thị danh sách đơn hàng -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_orders"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:paddingTop="8dp"/>
 </LinearLayout>

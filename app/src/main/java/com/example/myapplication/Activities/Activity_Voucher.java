@@ -6,13 +6,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Button;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.myapplication.R;
@@ -24,18 +23,17 @@ import java.util.List;
 
 public class Activity_Voucher extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private Adapter_voucher adapter;
-    private List<Voucher> voucherList;
     private Spinner spinnerSort;
-    private View TextView;
+    private List<Voucher> voucherList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voucher); // Ensure this layout exists
+        setContentView(R.layout.activity_voucher);
 
-        TextView = findViewById(R.id.titleVoucher); // Ensure this ID exists in layout
-        spinnerSort = findViewById(R.id.spinnerSort); // Ensure this ID exists in layout
+        // Initialize views
+        recyclerView = findViewById(R.id.recycler_voucher);
+        spinnerSort = findViewById(R.id.spinner_voucher);
 
         // Sample data
         voucherList = new ArrayList<>();
@@ -44,13 +42,45 @@ public class Activity_Voucher extends AppCompatActivity {
         voucherList.add(new Voucher("Voucher Black Friday", 70000));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter_voucher(voucherList);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+            @NonNull
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.voucher_item, parent, false);  // Use custom item layout
+                return new VoucherViewHolder(view);
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+                Voucher voucher = voucherList.get(position);
+                VoucherViewHolder viewHolder = (VoucherViewHolder) holder;
+                viewHolder.serialTextView.setText(String.valueOf(position + 1));  // Serial number
+                viewHolder.voucherInfoTextView.setText(voucher.getName());
+                viewHolder.voucherDiscountTextView.setText("Giảm giá: " + voucher.getDiscountAmount() + " VNĐ");
+            }
+
+            @Override
+            public int getItemCount() {
+                return voucherList.size();
+            }
+
+            class VoucherViewHolder extends RecyclerView.ViewHolder {
+                TextView serialTextView, voucherInfoTextView, voucherDiscountTextView;
+
+                public VoucherViewHolder(@NonNull View itemView) {
+                    super(itemView);
+                    serialTextView = itemView.findViewById(R.id.txtSerial);
+                    voucherInfoTextView = itemView.findViewById(R.id.txtVoucherInfo);
+                    voucherDiscountTextView = itemView.findViewById(R.id.txtVoucherDiscount);
+                }
+            }
+        });
 
         // Set up Spinner
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
                 this,
-                R.array.sort_options, // Ensure this array exists in res/values/arrays.xml
+                R.array.sort_options_price,
                 android.R.layout.simple_spinner_item
         );
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -65,22 +95,20 @@ public class Activity_Voucher extends AppCompatActivity {
                 } else {
                     sortByDiscount();
                 }
-                adapter.notifyDataSetChanged();
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // Thiết lập sự kiện cho nút "Quay lại"
-        Button backButton = findViewById(R.id.btnBack);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        // Set up Back button
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Mở lại Activity_fragment_user khi nhấn vào "Quay lại"
                 Intent intent = new Intent(Activity_Voucher.this, Activity_fragment_user.class);
                 startActivity(intent);
-                finish(); // Kết thúc Activity hiện tại
+                finish();
             }
         });
     }
@@ -93,46 +121,7 @@ public class Activity_Voucher extends AppCompatActivity {
         Collections.sort(voucherList, (v1, v2) -> v2.getDiscountAmount() - v1.getDiscountAmount());
     }
 
-    // Adapter_voucher.java
-    public static class Adapter_voucher extends RecyclerView.Adapter<Adapter_voucher.VoucherViewHolder> {
-        private List<Voucher> voucherList;
-
-        public Adapter_voucher(List<Voucher> voucherList) {
-            this.voucherList = voucherList;
-        }
-
-        @NonNull
-        @Override
-        public VoucherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(android.R.layout.simple_list_item_2, parent, false);
-            return new VoucherViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull VoucherViewHolder holder, int position) {
-            Voucher voucher = voucherList.get(position);
-            holder.text1.setText(voucher.getName());
-            holder.text2.setText("Giảm giá: " + voucher.getDiscountAmount() + " VNĐ");
-        }
-
-        @Override
-        public int getItemCount() {
-            return voucherList.size();
-        }
-
-        static class VoucherViewHolder extends RecyclerView.ViewHolder {
-            TextView text1, text2;
-
-            public VoucherViewHolder(@NonNull View itemView) {
-                super(itemView);
-                text1 = itemView.findViewById(android.R.id.text1);
-                text2 = itemView.findViewById(android.R.id.text2);
-            }
-        }
-    }
-
-    // Voucher.java
+    // Voucher model
     public static class Voucher {
         private String name;
         private int discountAmount;

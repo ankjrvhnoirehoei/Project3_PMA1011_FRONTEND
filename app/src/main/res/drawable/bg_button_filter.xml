@@ -2,14 +2,15 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape>
-            <corners android:radius="30dp"/>
-            <solid android:color="#512DA8"/>  <!-- Màu tím đậm khi bấm -->
+            <corners android:radius="8dp"/>  <!-- Giảm bo góc để vuông hơn -->
+            <solid android:color="#E0E0E0"/>  <!-- Màu xám nhạt khi bấm -->
         </shape>
     </item>
     <item>
         <shape>
-            <corners android:radius="30dp"/>
-            <solid android:color="#9575CD"/>  <!-- Màu tím nhạt mặc định -->
+            <corners android:radius="8dp"/>  <!-- Giữ góc vuông nhẹ -->
+            <solid android:color="#FFFFFF"/>  <!-- Màu trắng mặc định -->
+            <stroke android:width="2dp" android:color="#BDBDBD"/>  <!-- Viền xám nhẹ -->
         </shape>
     </item>
 </selector>

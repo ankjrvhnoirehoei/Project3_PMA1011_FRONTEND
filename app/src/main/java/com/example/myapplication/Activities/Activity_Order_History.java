@@ -1,7 +1,9 @@
 package com.example.myapplication.Activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,7 @@ public class Activity_Order_History extends AppCompatActivity {
     private Adapter_Order orderAdapter;
     private List<Order> orderList;
     private Button btnAll, btnInTransit, btnCanceled, btnReceived;
+    private LinearLayout btnBack; // Thêm biến cho nút quay lại
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class Activity_Order_History extends AppCompatActivity {
         btnInTransit = findViewById(R.id.btn_in_transit);
         btnCanceled = findViewById(R.id.btn_canceled);
         btnReceived = findViewById(R.id.btn_received);
+        btnBack = findViewById(R.id.btn_back); // Ánh xạ nút Quay lại
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -46,6 +50,9 @@ public class Activity_Order_History extends AppCompatActivity {
         btnInTransit.setOnClickListener(v -> filterOrders("Đang vận chuyển"));
         btnCanceled.setOnClickListener(v -> filterOrders("Đã hủy"));
         btnReceived.setOnClickListener(v -> filterOrders("Đã nhận"));
+
+        // Xử lý khi nhấn nút Quay lại
+        btnBack.setOnClickListener(v -> finish()); // Đóng Activity và quay lại Fragment trước
     }
 
     private void filterOrders(String status) {
