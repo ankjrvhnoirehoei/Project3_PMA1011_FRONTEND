@@ -2,19 +2,19 @@ package com.example.myapplication.Models;
 
 public class ResAddComment {
 
-    private boolean status;
+    private String status;
     private String message;
 
-    public ResAddComment(boolean status, String message) {
+    public ResAddComment(String status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
