@@ -54,7 +54,7 @@ public class Adapter_Admin_All_Bills extends RecyclerView.Adapter<Adapter_Admin_
         ResBill resBill = listDetails.get(position);
         holder.txtBillID.setText(resBill.getBillID());
         holder.txtUsername.setText(resBill.getUserID());
-        holder.txtBillTotal.setText(resBill.getTotal());
+        holder.txtBillTotal.setText(resBill.getTotal() + "");
     }
 
     @Override
