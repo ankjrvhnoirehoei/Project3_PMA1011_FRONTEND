@@ -1,5 +1,6 @@
 package com.example.myapplication.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,8 +14,9 @@ import com.example.myapplication.R;
 public class Activity_fragment_user extends AppCompatActivity {
 
     LinearLayout logoutButton, profileInfoButton, voucherButton, statisticsButton, settingsButton;
-    private TextView usernameText; // TextView hiển thị tên người dùng
+    private TextView usernameText, phoneText, addressText;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +29,19 @@ public class Activity_fragment_user extends AppCompatActivity {
         settingsButton = findViewById(R.id.settings);
         logoutButton = findViewById(R.id.logout);
         usernameText = findViewById(R.id.username);
+        phoneText = findViewById(R.id.phoneNumber);
+        addressText = findViewById(R.id.address);
 
-        // Kiểm tra xem statisticsButton có bị null không
-        if (statisticsButton == null) {
-            Log.e("DEBUG", "statisticsButton bị null! Kiểm tra ID trong XML.");
-        }
-
-        // Lấy tên từ SharedPreferences
+        // Lấy dữ liệu từ SharedPreferences
         SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        String fullName = preferences.getString("username", "Nguyễn Văn A"); // Mặc định là "Nguyễn Văn A"
+        String fullName = preferences.getString("username", "Nguyễn Văn A");
+        String phoneNumber = preferences.getString("phoneNumber", "Chưa có số điện thoại");
+        String address = preferences.getString("address", "Chưa có địa chỉ");
+
+        // Cập nhật giao diện
         usernameText.setText(fullName);
+        phoneText.setText(phoneNumber);
+        addressText.setText(address);
 
         // Xử lý sự kiện khi nhấn vào "Thông tin cá nhân"
         profileInfoButton.setOnClickListener(v -> {
@@ -65,10 +70,15 @@ public class Activity_fragment_user extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Cập nhật lại tên sau khi sửa trong UserProfile
+            // Cập nhật lại thông tin sau khi chỉnh sửa
             SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
             String updatedName = preferences.getString("username", "Nguyễn Văn A");
-            usernameText.setText(updatedName); // Cập nhật tên mới vào TextView
+            String updatedPhone = preferences.getString("phoneNumber", "Chưa có số điện thoại");
+            String updatedAddress = preferences.getString("address", "Chưa có địa chỉ");
+
+            usernameText.setText(updatedName);
+            phoneText.setText(updatedPhone);
+            addressText.setText(updatedAddress);
         }
     }
 
