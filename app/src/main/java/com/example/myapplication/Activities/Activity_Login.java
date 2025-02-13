@@ -139,6 +139,7 @@ public class Activity_Login extends AppCompatActivity {
             public void onFailure(Call<ResLogin> call, Throwable t) {
                 // Show failure message (network issues, etc.)
                 Toast.makeText(Activity_Login.this, "Login failed: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("API ERROR: ", t.getMessage());
             }
         });
     }
