@@ -44,6 +44,7 @@ public class Fragment_Home extends Fragment {
 
         rvPhone = v.findViewById(R.id.rvAllPhones);
         rvPhone.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        setOnClickListener();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASE_URL)

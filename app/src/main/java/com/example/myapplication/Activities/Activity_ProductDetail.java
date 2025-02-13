@@ -85,7 +85,7 @@ public class Activity_ProductDetail extends AppCompatActivity {
 
         // get token, phoneId and userID from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-        String token = "Bearer" + sharedPreferences.getString("AuthToken", null);
+        String token = "Bearer " + sharedPreferences.getString("AuthToken", null);
         String phoneID = sharedPreferences.getString("sharedPhoneID", null);
         String userID = sharedPreferences.getString("loginUserID", null);
 
