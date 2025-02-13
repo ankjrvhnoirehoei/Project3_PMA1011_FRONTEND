@@ -1,159 +1,22 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.Fragment_User">
+    android:background="@color/white"
+    tools:context=".Fragments.Fragment_Home">
 
-    <!-- Ảnh đại diện và thông tin người dùng -->
-    <LinearLayout
-        android:id="@+id/userInfoLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <!--  Sort button to sort all phones by brands, prices, ratings,
+      comments count, types-->
+    <!--  Banner to display the newest phone  -->
 
-        <!-- Ảnh đại diện -->
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/profile"
-            android:contentDescription="Ảnh đại diện"
-            android:scaleType="centerCrop" />
-
-        <!-- Thông tin người dùng -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
-
-            <!-- Tên người dùng -->
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Người dùng"
-                android:textSize="18sp"
-                android:textColor="#000000" />
-
-            <!-- Số điện thoại -->
-            <TextView
-                android:id="@+id/phoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Số điện thoại: 0123456789"
-                android:textSize="16sp"
-                android:textColor="#757575" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Divider -->
-    <View
+    <!--  All phones displayed  -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAllPhones"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginVertical="8dp"
-        android:background="#E0E0E0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userInfoLayout" />
+        android:layout_height="match_parent"
+        android:paddingBottom="57dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="50dp"/>
 
-    <!-- Danh sách menu -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userInfoLayout">
-
-        <!-- Thông tin kênh cá nhân -->
-        <Button
-            android:id="@+id/profileInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:gravity="start|center_vertical"
-            android:background="@android:color/transparent"
-            android:text="Thông tin cá nhân"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#E0E0E0" />
-
-        <!-- Video của bạn -->
-        <Button
-            android:id="@+id/yourVideos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:gravity="start|center_vertical"
-            android:background="@android:color/transparent"
-            android:text="Voucher của bạn"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#E0E0E0" />
-
-        <!-- Thống kê -->
-        <Button
-            android:id="@+id/statistics"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:gravity="start|center_vertical"
-            android:background="@android:color/transparent"
-            android:text="Đơn hàng của bạn"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#E0E0E0" />
-
-        <!-- Cài đặt -->
-        <Button
-            android:id="@+id/settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:gravity="start|center_vertical"
-            android:background="@android:color/transparent"
-            android:text="Thông tin cửa hàng"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#E0E0E0" />
-
-        <!-- Đăng xuất -->
-        <ImageButton
-            android:id="@+id/logout"
-            android:layout_width="205dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:contentDescription="Đăng xuất" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#E0E0E0" />
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
