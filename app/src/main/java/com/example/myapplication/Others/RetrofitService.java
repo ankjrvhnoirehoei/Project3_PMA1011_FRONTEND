@@ -1,12 +1,10 @@
 package com.example.myapplication.Others;
 
-import com.example.myapplication.Models.ReqGetUser;
 import com.example.myapplication.Models.ReqLogin;
 import com.example.myapplication.Models.ReqSignup;
 import com.example.myapplication.Models.ReqUser;
 import com.example.myapplication.Models.ResBill;
 import com.example.myapplication.Models.ResBillsFull;
-import com.example.myapplication.Models.ResGetUser;
 import com.example.myapplication.Models.ResLogin;
 import com.example.myapplication.Models.ResPhone;
 import com.example.myapplication.Models.ResSignup;
@@ -76,9 +74,4 @@ public interface RetrofitService {
             @Header("Authorization") String authToken,
             @Query("userID") String userID
     );
-    // get 1 user
-    @GET("users/user")
-    Call<ResUser> get1user(@Header("Authorization") String token, @Query("userID") String userID );
 }
-
-

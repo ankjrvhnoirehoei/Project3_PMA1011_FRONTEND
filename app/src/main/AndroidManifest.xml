@@ -25,6 +25,9 @@
         </activity>
 
         <activity
+            android:name=".Activities.Activity_Admin_All_BillDetails"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Activity_User_Bills_Full"
             android:exported="false"/>
 

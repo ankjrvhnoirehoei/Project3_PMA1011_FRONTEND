@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/txtBillID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bill ID: 12345"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtPhoneID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone ID: 67890"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="status: pending"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="date created: 2021-12-31"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txtQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="quantity: 1"
+        android:textSize="14sp" />
+
+</LinearLayout>
