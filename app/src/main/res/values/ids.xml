@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="searchView" type="id" />
+    <item name="recyclerView" type="id" />
+    <item name="filterSpinner" type="id" />
+    <item name="productBrand" type="id" />
+    <item name="productType" type="id" />
+    <item name="productDescription" type="id" />
+    <item name="tvOrderName" type="id" />
+    <item name="tvStatus" type="id" />
+</resources>

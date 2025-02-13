@@ -63,6 +63,9 @@ public class ReqUser {
         this.bannedUser = bannedUser;
     }
 
+    public ReqUser(String username, String email, String password, String phone) {
+    }
+
     public String getUserID() {
         return userID;
     }

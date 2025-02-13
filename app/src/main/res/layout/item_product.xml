@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp">
+
+    <!-- Thêm một hình ảnh đại diện cho sản phẩm (nếu cần) -->
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/placeholder"
+    android:layout_gravity="center_vertical"
+    android:layout_marginEnd="16dp" />
+
+    <!-- TextView cho tên sản phẩm -->
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Product Name"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:gravity="start|center_vertical"
+        android:fontFamily="sans-serif-medium"/>
+
+    <!-- TextView cho giá sản phẩm -->
+    <TextView
+        android:id="@+id/productPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="end|center_vertical" />
+</LinearLayout>
