@@ -154,6 +154,7 @@
         </LinearLayout>
 
         <!-- Trạng thái VIP -->
+        <!-- Thay đổi mật khẩu -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -164,15 +165,25 @@
             android:background="@android:color/white">
 
             <TextView
-                android:id="@+id/vipStatus"
-                android:layout_width="wrap_content"
+                android:id="@+id/changePassword"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:text="Trạng thái: Khách hàng VIP"
+                android:text="Thay đổi mật khẩu"
                 android:textColor="#000000"
                 android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/editPassword"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp"
+                android:src="@drawable/pen"
+                android:contentDescription="Thay đổi mật khẩu"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"/>
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

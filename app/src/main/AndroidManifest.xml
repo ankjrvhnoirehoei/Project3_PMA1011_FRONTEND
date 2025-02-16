@@ -18,17 +18,21 @@
         <activity
             android:name=".Activities.Activity_UserProfile"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
 
         </activity>
         <activity
             android:name=".Activities.Activity_fragment_user"
             android:exported="true">
 
+
         </activity>
 
-        <activity
-            android:name=".Activities.Activity_Admin_All_BillDetails"
-            android:exported="false" />
+
         <activity
             android:name=".Activities.Activity_User_Bills_Full"
             android:exported="false"/>
@@ -44,7 +48,6 @@
         <activity
             android:name=".Activities.Activity_Login"
             android:exported="true">
-
 
             
         </activity>
@@ -64,10 +67,7 @@
         <activity
             android:name=".Activities.Main"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
 
     </application>

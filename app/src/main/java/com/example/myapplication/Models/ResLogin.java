@@ -5,15 +5,17 @@ public class ResLogin {
     private String message;
     private String token;
     private String refreshToken;
+    private String userID;
 
     public ResLogin() {
     }
 
-    public ResLogin(String status, String message, String token, String refreshToken) {
+    public ResLogin(String status, String message, String token, String refreshToken, String userID) {
         this.status = status;
         this.message = message;
         this.token = token;
         this.refreshToken = refreshToken;
+        this.userID = userID;
     }
 
     public String getStatus() {
@@ -46,5 +48,13 @@ public class ResLogin {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

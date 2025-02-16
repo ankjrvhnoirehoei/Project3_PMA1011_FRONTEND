@@ -99,6 +99,7 @@ public class Activity_Login extends AppCompatActivity {
                         // Check for the token and refreshToken
                         String token = resLogin.getToken();
                         String refreshToken = resLogin.getRefreshToken();
+                        String userID = resLogin.getUserID();
 
                         if (token != null && refreshToken != null) {
                             // Login successful
@@ -109,6 +110,7 @@ public class Activity_Login extends AppCompatActivity {
                             SharedPreferences.Editor editor = preferences.edit();
                             editor.putString("AuthToken", token);
                             editor.putString("RefreshToken", refreshToken); // Save refresh token as well
+                            editor.putString("loginUserID", userID);
                             editor.apply();
                         } else {
                             // If tokens are missing, something went wrong, handle it
