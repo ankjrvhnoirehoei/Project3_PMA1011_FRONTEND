@@ -61,100 +61,150 @@
             android:scaleType="centerCrop" />
 
         <!-- Tên đầy đủ -->
+        <!-- Họ và Tên -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:orientation="vertical"
             android:background="@android:color/white">
 
+            <!-- Nhãn "Họ và Tên" -->
             <TextView
-                android:id="@+id/fullName"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Họ và Tên: Nguyễn Văn A"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="Họ và Tên"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp" />
 
-            <ImageButton
-                android:id="@+id/editFullName"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="#FFFFFF"
-                android:contentDescription="Sửa tên"
-                android:padding="4dp"
-                android:src="@drawable/pen"
-                android:scaleType="centerInside"
-                android:adjustViewBounds="true"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/fullName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nguyễn Văn A"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <ImageButton
+                    android:id="@+id/editFullName"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="4dp"
+                    android:src="@drawable/pen"
+                    android:contentDescription="Sửa tên"
+                    android:scaleType="centerInside"
+                    android:adjustViewBounds="true"/>
+            </LinearLayout>
         </LinearLayout>
 
+
+        <!-- Số điện thoại -->
         <!-- Số điện thoại -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:orientation="vertical"
             android:background="@android:color/white">
 
+            <!-- Nhãn "Số điện thoại" -->
             <TextView
-                android:id="@+id/phoneNumber"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Số điện thoại: 0123456789"
-                android:textSize="18sp"
-                android:textColor="#000000" />
+                android:text="Số điện thoại"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp" />
 
-            <ImageButton
-                android:id="@+id/editPhoneNumber"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="4dp"
-                android:src="@drawable/pen"
-                android:contentDescription="Sửa số điện thoại"
-                android:scaleType="centerInside"
-                android:adjustViewBounds="true"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/phoneNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0123456789"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+                <ImageButton
+                    android:id="@+id/editPhoneNumber"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="4dp"
+                    android:src="@drawable/pen"
+                    android:contentDescription="Sửa số điện thoại"
+                    android:scaleType="centerInside"
+                    android:adjustViewBounds="true"/>
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Địa chỉ nhà -->
+        <!-- Địa chỉ -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:orientation="vertical"
             android:background="@android:color/white">
 
+            <!-- Nhãn "Địa chỉ" -->
             <TextView
-                android:id="@+id/address"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Địa chỉ: 123 Đường ABC, Phường XYZ, TP. HCM"
-                android:textSize="18sp"
-                android:textColor="#000000" />
+                android:text="Địa chỉ"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp" />
 
-            <ImageButton
-                android:id="@+id/editAddress"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="4dp"
-                android:src="@drawable/pen"
-                android:contentDescription="Sửa địa chỉ"
-                android:scaleType="centerInside"
-                android:adjustViewBounds="true"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="123 Đường ABC, Phường XYZ, TP. HCM"
+                    android:textSize="18sp"
+                    android:textColor="#000000" />
+
+                <ImageButton
+                    android:id="@+id/editAddress"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="4dp"
+                    android:src="@drawable/pen"
+                    android:contentDescription="Sửa địa chỉ"
+                    android:scaleType="centerInside"
+                    android:adjustViewBounds="true"/>
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Trạng thái VIP -->
-        <!-- Thay đổi mật khẩu -->
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

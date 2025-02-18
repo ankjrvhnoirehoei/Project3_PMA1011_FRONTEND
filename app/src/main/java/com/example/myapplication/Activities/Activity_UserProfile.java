@@ -3,6 +3,7 @@ package com.example.myapplication.Activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -12,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.R;
 
 public class Activity_UserProfile extends AppCompatActivity {
-    private TextView fullName, phoneNumber, address;
-    private ImageButton editFullName, editPhoneNumber, editAddress;
+    private TextView fullName, phoneNumber, address, changePassword;
+    private ImageButton editFullName, editPhoneNumber, editAddress, editPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +25,11 @@ public class Activity_UserProfile extends AppCompatActivity {
         fullName = findViewById(R.id.fullName);
         phoneNumber = findViewById(R.id.phoneNumber);
         address = findViewById(R.id.address);
+        changePassword = findViewById(R.id.changePassword);
         editFullName = findViewById(R.id.editFullName);
         editPhoneNumber = findViewById(R.id.editPhoneNumber);
         editAddress = findViewById(R.id.editAddress);
+        editPassword = findViewById(R.id.editPassword);
 
         // Nhận dữ liệu từ Fragment_User
         Intent intent = getIntent();
@@ -39,6 +42,7 @@ public class Activity_UserProfile extends AppCompatActivity {
         editFullName.setOnClickListener(v -> showEditDialog("Sửa Họ và Tên", fullName, "username"));
         editPhoneNumber.setOnClickListener(v -> showEditDialog("Sửa Số Điện Thoại", phoneNumber, "phoneNumber"));
         editAddress.setOnClickListener(v -> showEditDialog("Sửa Địa Chỉ", address, "address"));
+        editPassword.setOnClickListener(v -> showEditDialog("Thay đổi mật khẩu", null, "password"));
     }
 
     private void showEditDialog(String title, TextView textView, String key) {
@@ -46,17 +50,24 @@ public class Activity_UserProfile extends AppCompatActivity {
         builder.setTitle(title);
 
         final EditText input = new EditText(this);
-        input.setText(textView.getText().toString());
+        if ("password".equals(key)) {
+            input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        } else {
+            input.setText(textView.getText().toString());
+        }
         builder.setView(input);
 
         builder.setPositiveButton("Lưu", (dialog, which) -> {
             String newValue = input.getText().toString();
-            textView.setText(newValue);
 
             SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString(key, newValue);
             editor.apply();
+
+            if (textView != null) {
+                textView.setText(newValue);
+            }
 
             Intent intent = new Intent();
             intent.putExtra(key, newValue);

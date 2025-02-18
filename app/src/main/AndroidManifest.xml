@@ -18,10 +18,7 @@
         <activity
             android:name=".Activities.Activity_UserProfile"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
 
 
         </activity>
@@ -48,6 +45,10 @@
         <activity
             android:name=".Activities.Activity_Login"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
             
         </activity>
@@ -67,6 +68,7 @@
         <activity
             android:name=".Activities.Main"
             android:exported="true">
+
 
         </activity>
 
