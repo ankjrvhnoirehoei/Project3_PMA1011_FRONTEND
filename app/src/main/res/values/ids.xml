@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="phoneName" type="id" />
+    <item name="phoneBrand" type="id" />
+    <item name="phonePrice" type="id" />
+    <item name="phoneSold" type="id" />
+</resources>

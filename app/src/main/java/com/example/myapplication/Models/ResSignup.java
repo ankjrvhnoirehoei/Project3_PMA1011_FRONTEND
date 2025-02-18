@@ -18,4 +18,9 @@ public class ResSignup {
 
     public String getRefreshToken() { return refreshToken; }
     public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
+
+    // Thêm phương thức getStatus()
+    public boolean getStatus() {
+        return status;
+    }
 }

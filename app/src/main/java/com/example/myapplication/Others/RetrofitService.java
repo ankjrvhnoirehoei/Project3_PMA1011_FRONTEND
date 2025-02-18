@@ -87,4 +87,10 @@ public interface RetrofitService {
             @Header("Authorization") String authToken,
             @Query("billID") String billID
     );
+    @GET("phones/findPhones")
+    Call<List<ResPhone>> searchPhones(
+            @Header("Authorization") String authToken,
+            @Query("searchPhones") String searchQuery
+    );
+
 }
