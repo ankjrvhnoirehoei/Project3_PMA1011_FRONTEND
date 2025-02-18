@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
+import com.example.myapplication.Fragments.Fragment_User;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -106,7 +107,7 @@ public class Activity_Voucher extends AppCompatActivity {
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Activity_Voucher.this, Activity_fragment_user.class);
+                Intent intent = new Intent(Activity_Voucher.this, Fragment_User.class);
                 startActivity(intent);
                 finish();
             }

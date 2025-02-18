@@ -4,4 +4,5 @@
     <item name="phoneBrand" type="id" />
     <item name="phonePrice" type="id" />
     <item name="phoneSold" type="id" />
+    <item name="logout" type="id" />
 </resources>
