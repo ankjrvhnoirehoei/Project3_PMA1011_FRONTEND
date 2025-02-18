@@ -24,12 +24,15 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.myapplication.Models.Ratings;
 import com.example.myapplication.Models.ReqAddRating;
 import com.example.myapplication.Models.ResAddRating;
+import com.example.myapplication.Models.ResBrand;
 import com.example.myapplication.Models.ResOnePhone;
 import com.example.myapplication.Models.ResRating;
+import com.example.myapplication.Models.ResType;
 import com.example.myapplication.Others.RetrofitService;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,15 +71,6 @@ public class Activity_ProductDetail extends AppCompatActivity {
         tv_productDescription = findViewById(R.id.tv_productDescription);
         bt_commentSection = findViewById(R.id.bt_commentSection);
 
-        // moving user to comment section screen
-        bt_commentSection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent in = new Intent(getApplicationContext(), Activity_ProductCommentsSection.class);
-                startActivity(in);
-            }
-        });
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -89,10 +83,12 @@ public class Activity_ProductDetail extends AppCompatActivity {
         String phoneID = sharedPreferences.getString("sharedPhoneID", null);
         String userID = sharedPreferences.getString("loginUserID", null);
 
-        // click to show the rating dialog
-        ratingImage.setOnClickListener(new View.OnClickListener() {
+        // moving user to comment section screen
+        bt_commentSection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Intent in = new Intent(getApplicationContext(), Activity_ProductCommentsSection.class);
+//                startActivity(in);
                 AlertDialog.Builder builder = new AlertDialog.Builder(Activity_ProductDetail.this);
                 LayoutInflater inf = Activity_ProductDetail.this.getLayoutInflater();
                 View dialogView = inf.inflate(R.layout.dialog_user_rating, null);
@@ -313,6 +309,17 @@ public class Activity_ProductDetail extends AppCompatActivity {
                         });
                     }
                 });
+                dialog.show();
+            }
+        });
+
+
+
+        // click to show the rating dialog
+        ratingImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
@@ -542,8 +549,69 @@ public class Activity_ProductDetail extends AppCompatActivity {
                     ResOnePhone resOnePhone = response.body();
                     tv_productName.setText(resOnePhone.getPhoneName());
                     tv_productPrice.setText(resOnePhone.getPhonePrice() + " VND");
-                    tv_productBrand.setText(resOnePhone.getPhoneBrand());
-                    tv_productType.setText(resOnePhone.getPhoneType());
+                    // call API to get all brands
+                    retrofitService.getAllBrands(token).enqueue(new Callback<List<ResBrand>>() {
+                        @Override
+                        public void onResponse(Call<List<ResBrand>> call, Response<List<ResBrand>> response) {
+                            if(response.isSuccessful() && response.body() != null){
+                                ArrayList<ResBrand> brandList = new ArrayList<ResBrand>(response.body());
+                                Log.d("productBrandID; ", resOnePhone.getPhoneBrand());
+                                boolean chkBrand = false;
+                                // get every brandID from brand list then compare with product's brandID
+                                for(int i = 0; i<brandList.size(); i++){
+                                    Log.d("brandID: ", brandList.get(i).getBrandID());
+                                    if(brandList.get(i).getBrandID().equals(resOnePhone.getPhoneBrand())){
+                                        // if the condition is true, set text and break from for loop
+                                        tv_productBrand.setText("Hãng sản phẩm: " + brandList.get(i).getBrand());
+                                        chkBrand = true;
+                                        break;
+                                    }
+                                }
+                                if(resOnePhone.getPhoneBrand().isEmpty()){
+                                    tv_productBrand.setText("Sản phẩm hiện chưa cập nhật hãng sản phẩm");
+                                }
+                                if(!chkBrand){
+                                    tv_productBrand.setText("Chưa có hãng sản phẩm này");
+                                }
+                            } else {
+                                Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<ResBrand>> call, Throwable throwable) {
+                            Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                        }
+                    });
+                    retrofitService.getAllTypes(token).enqueue(new Callback<List<ResType>>() {
+                        @Override
+                        public void onResponse(Call<List<ResType>> call, Response<List<ResType>> response) {
+                            if(response.isSuccessful() && response.body() != null){
+                                ArrayList<ResType> typeList = new ArrayList<ResType>(response.body());
+                                Log.d("productTypeID; ", resOnePhone.getPhoneType());
+                                boolean chkType = false;
+                                for(int i = 0; i<typeList.size(); i++){
+                                    Log.d("typeID: ", typeList.get(i).getTypeID());
+                                    if(typeList.get(i).getTypeID().equals(resOnePhone.getPhoneType())){
+                                        tv_productType.setText("Loại sản phẩm: " + typeList.get(i).getType());
+                                        chkType = true;
+                                        break;
+                                    }
+                                }
+                                if(resOnePhone.getPhoneType().isEmpty()){
+                                    tv_productType.setText("Sản phẩm hiện chưa cập nhật loại sản phẩm");
+                                }
+                                if(!chkType){
+                                    tv_productType.setText("Chưa có loại sản phẩm này");
+                                }
+                            } else {
+                                Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<ResType>> call, Throwable throwable) {
+                            Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                        }
+                    });
                     tv_productDescription.setText(resOnePhone.getPhoneDescription());
 
                     // put all the images of a phone in their place
@@ -552,83 +620,42 @@ public class Activity_ProductDetail extends AppCompatActivity {
                     if (phoneImages != null && !phoneImages.isEmpty()) {
                         // Get the first image, which is a base64 encoded string
                         String base64MainImage = phoneImages.get(0);
-                        String base64Image1 = phoneImages.get(1);
-                        String base64Image2 = phoneImages.get(2);
-                        String base64Image3 = phoneImages.get(3);
-                        String base64Image4 = phoneImages.get(4);
-                        String base64Image5 = phoneImages.get(5);
-
+                        ImageView[] imageViews = {productImage1, productImage2, productImage3, productImage4, productImage5};
 
                         // Check if the base64 string contains metadata and strip it
                         if (base64MainImage.startsWith("data:image")) {
                             base64MainImage = base64MainImage.substring(base64MainImage.indexOf(",") + 1);
-                        }
-                        if (base64Image1.startsWith("data:image")) {
-                            base64Image1 = base64Image1.substring(base64Image1.indexOf(",") + 1);
-                        }
-                        if (base64Image2.startsWith("data:image")) {
-                            base64Image2 = base64Image2.substring(base64Image2.indexOf(",") + 1);
-                        }
-                        if (base64Image3.startsWith("data:image")) {
-                            base64Image3 = base64Image3.substring(base64Image3.indexOf(",") + 1);
-                        }
-                        if (base64Image4.startsWith("data:image")) {
-                            base64Image4 = base64Image4.substring(base64Image4.indexOf(",") + 1);
-                        }
-                        if (base64Image5.startsWith("data:image")) {
-                            base64Image5 = base64Image5.substring(base64Image5.indexOf(",") + 1);
                         }
 
                         // Convert the base64 string into a Bitmap
                         try {
                             byte[] decodedMainImageString = Base64.decode(base64MainImage, Base64.DEFAULT);
                             Bitmap decodedMainImageBitmap = BitmapFactory.decodeByteArray(decodedMainImageString, 0, decodedMainImageString.length);
-                            byte[] decodedImage1String = Base64.decode(base64Image1, Base64.DEFAULT);
-                            Bitmap decodedImage1Bitmap = BitmapFactory.decodeByteArray(decodedImage1String, 0, decodedImage1String.length);
-                            byte[] decodedImage2String = Base64.decode(base64Image2, Base64.DEFAULT);
-                            Bitmap decodedImage2Bitmap = BitmapFactory.decodeByteArray(decodedImage2String, 0, decodedImage1String.length);
-                            byte[] decodedImage3String = Base64.decode(base64Image3, Base64.DEFAULT);
-                            Bitmap decodedImage3Bitmap = BitmapFactory.decodeByteArray(decodedImage3String, 0, decodedImage1String.length);
-                            byte[] decodedImage4String = Base64.decode(base64Image4, Base64.DEFAULT);
-                            Bitmap decodedImage4Bitmap = BitmapFactory.decodeByteArray(decodedImage4String, 0, decodedImage1String.length);
-                            byte[] decodedImage5String = Base64.decode(base64Image5, Base64.DEFAULT);
-                            Bitmap decodedImage5Bitmap = BitmapFactory.decodeByteArray(decodedImage5String, 0, decodedImage1String.length);
-
-                            // Set the decoded Bitmap main image of product to the ImageView
+                            // Set the decoded Bitmap of product to the ImageView
                             productMainImage.setImageBitmap(decodedMainImageBitmap);
-                            // If user click in one of five image below, change the main image with the clicked image
-                            productImage1.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    productMainImage.setImageBitmap(decodedImage1Bitmap);
+                            for(int i = 1; i <= 5; i++){
+                                if(i<phoneImages.size()){
+                                    String base64Image = phoneImages.get(i);
+                                    if(base64Image.startsWith("data:image")) {
+                                        base64Image = base64Image.substring(base64Image.indexOf(",") + 1);
+                                    }
+                                    byte[] decodedImageString = Base64.decode(base64Image, Base64.DEFAULT);
+                                    Bitmap decodedImageBitmap = BitmapFactory.decodeByteArray(decodedImageString, 0, decodedImageString.length);
+
+                                    imageViews[i-1].setImageBitmap(decodedImageBitmap);
+                                    imageViews[i-1].setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            productMainImage.setImageBitmap(decodedImageBitmap);
+                                        }
+                                    });
+                                } else {
+                                    imageViews[i-1].setImageResource(R.drawable.no_image);
                                 }
-                            });
-                            productImage2.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    productMainImage.setImageBitmap(decodedImage2Bitmap);
-                                }
-                            });
-                            productImage3.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    productMainImage.setImageBitmap(decodedImage3Bitmap);
-                                }
-                            });
-                            productImage4.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    productMainImage.setImageBitmap(decodedImage4Bitmap);
-                                }
-                            });
-                            productImage5.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    productMainImage.setImageBitmap(decodedImage5Bitmap);
-                                }
-                            });
+                            }
                         } catch (IllegalArgumentException e) {
                             e.printStackTrace();
+                            Log.e("API ERROR: ", e.getMessage());
                             // If there's an error decoding the image, use the default "no_image.png"
                             productMainImage.setImageResource(R.drawable.no_image);
                             productImage1.setImageResource(R.drawable.no_image);
@@ -638,7 +665,6 @@ public class Activity_ProductDetail extends AppCompatActivity {
                             productImage5.setImageResource(R.drawable.no_image);
                         }
                     } else {
-                        // If there are no images, use the default "no_image.png"
                         productMainImage.setImageResource(R.drawable.no_image);
                         productImage1.setImageResource(R.drawable.no_image);
                         productImage2.setImageResource(R.drawable.no_image);
@@ -649,7 +675,6 @@ public class Activity_ProductDetail extends AppCompatActivity {
                 } else {
                     Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
                 }
-
             }
 
             @Override
@@ -671,6 +696,9 @@ public class Activity_ProductDetail extends AppCompatActivity {
                             ratingImage.setClickable(false);
                             tv_productRating.setClickable(false);
                         }
+                    }
+                    if(response.code() == 404){
+                        tv_productRating.setText("0/5");
                     }
                 } else {
                     Log.e("Response", "Error: " + response.code() + " Message: " + response.message());

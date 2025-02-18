@@ -93,7 +93,6 @@ public class Activity_Login extends AppCompatActivity {
             public void onResponse(Call<ResLogin> call, Response<ResLogin> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ResLogin resLogin = response.body();
-
                     if (resLogin.getStatus().equals("true")) {
                         // Check for the token and refreshToken
                         String token = resLogin.getToken();

@@ -102,11 +102,13 @@
                 android:orientation="horizontal"
                 android:layout_weight="1"
                 android:clickable="true">
-                <ImageView
+                <ImageButton
                     android:id="@+id/ratingImage"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/rating_star"
+                    android:scaleType="centerCrop"
+                    android:backgroundTint="@color/white"
                     android:clickable="true"/>
                 <TextView
                     android:id="@+id/tv_productRating"

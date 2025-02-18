@@ -5,6 +5,7 @@ import com.example.myapplication.Models.ReqAddRating;
 import com.example.myapplication.Models.ReqLogin;
 import com.example.myapplication.Models.ResAddComment;
 import com.example.myapplication.Models.ResAddRating;
+import com.example.myapplication.Models.ResBrand;
 import com.example.myapplication.Models.ResComment;
 import com.example.myapplication.Models.ReqSignup;
 import com.example.myapplication.Models.ResBillsFull;
@@ -13,6 +14,7 @@ import com.example.myapplication.Models.ResOnePhone;
 import com.example.myapplication.Models.ResPhone;
 import com.example.myapplication.Models.ResRating;
 import com.example.myapplication.Models.ResSignup;
+import com.example.myapplication.Models.ResType;
 import com.example.myapplication.Models.ResUser;
 
 import java.util.List;
@@ -31,7 +33,9 @@ import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface RetrofitService {
-    public static final String BASE_URL = "https://project3-pma1011-backend.onrender.com";
+    //https://project3-pma1011-backend-q2ql.onrender.com
+    //https://project3-pma1011-backend.onrender.com
+    public static final String BASE_URL = "https://project3-pma1011-backend-q2ql.onrender.com";
 
     // login api
     @POST("users/login")
@@ -44,6 +48,14 @@ public interface RetrofitService {
     // get all phones
     @GET("phones/home")
     Call<List<ResPhone>> getAllPhones(@Header("Authorization") String token);  // Add the token header
+
+    // get all types
+    @GET("types/allTypes")
+    Call<List<ResType>> getAllTypes(@Header("Authorization") String token);
+
+    // get all brand
+    @GET("brands/allBrands")
+    Call<List<ResBrand>> getAllBrands(@Header("Authorization") String token);
 
     // get a phone detail by phone id
     @GET("phones/onePhone")
@@ -99,5 +111,4 @@ public interface RetrofitService {
             @Query("userID") String userID
     );
 
-    
 }
