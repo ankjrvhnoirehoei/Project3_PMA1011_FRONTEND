@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Comments"
+        android:text="Tất cả bình luận"
         android:textSize="30sp"
         android:textAlignment="center"
         android:textColor="@color/black"/>
@@ -38,8 +38,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:layout_marginTop="5dp"
-                    android:hint="Write down your comment"
+                    android:layout_marginTop="10dp"
+                    android:hint="Viết nhận xét của bạn"
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:background="@drawable/bg_et_no_border"/>
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginBottom="10dp"
-                android:text="Send"/>
+                android:text="Xác nhận"/>
         </LinearLayout>
     </LinearLayout>
 

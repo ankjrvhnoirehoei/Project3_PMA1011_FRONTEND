@@ -1,9 +1,12 @@
 package com.example.myapplication.Activities;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -11,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,9 +46,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Activity_ProductDetail extends AppCompatActivity {
 
-    ImageView productMainImage, productImage1, productImage2, productImage3, productImage4, productImage5, ratingImage;
+    ImageView productMainImage, productImage1, productImage2, productImage3, productImage4, productImage5;
     TextView tv_productName, tv_productPrice, tv_productRating, tv_productBrand, tv_productType, tv_productDescription;
     Button bt_commentSection;
+    LinearLayout ratingSection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +67,6 @@ public class Activity_ProductDetail extends AppCompatActivity {
         productImage3 = findViewById(R.id.productImage3);
         productImage4 = findViewById(R.id.productImage4);
         productImage5 = findViewById(R.id.productImage5);
-        ratingImage = findViewById(R.id.ratingImage);
         tv_productName = findViewById(R.id.tv_productName);
         tv_productPrice = findViewById(R.id.tv_productPrice);
         tv_productRating = findViewById(R.id.tv_productRating);
@@ -70,6 +74,7 @@ public class Activity_ProductDetail extends AppCompatActivity {
         tv_productType = findViewById(R.id.tv_productType);
         tv_productDescription = findViewById(R.id.tv_productDescription);
         bt_commentSection = findViewById(R.id.bt_commentSection);
+        ratingSection = findViewById(R.id.ratingSection);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASE_URL)
@@ -87,8 +92,16 @@ public class Activity_ProductDetail extends AppCompatActivity {
         bt_commentSection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent in = new Intent(getApplicationContext(), Activity_ProductCommentsSection.class);
-//                startActivity(in);
+                Intent in = new Intent(getApplicationContext(), Activity_ProductCommentsSection.class);
+                startActivity(in);
+            }
+        });
+
+        // click to show the rating dialog
+        ratingSection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("RatingSection Click: ", "RatingSection clicked");
                 AlertDialog.Builder builder = new AlertDialog.Builder(Activity_ProductDetail.this);
                 LayoutInflater inf = Activity_ProductDetail.this.getLayoutInflater();
                 View dialogView = inf.inflate(R.layout.dialog_user_rating, null);
@@ -108,6 +121,9 @@ public class Activity_ProductDetail extends AppCompatActivity {
                 img_star5 = dialogView.findViewById(R.id.img_star5);
                 tv_userRatingScore = dialogView.findViewById(R.id.tv_userRatingScore);
                 btn_commit = dialogView.findViewById(R.id.btn_commit);
+
+                // Create a drawable of RatingStar image to be use as a sample to check the condition logic
+                @SuppressLint("UseCompatLoadingForDrawables") Drawable StarDrawable = getResources().getDrawable(R.drawable.rating_star);
 
                 // clicking any 1 of 5 star in the rating dialog will create a new rating for the rating model
                 img_star1.setOnClickListener(new View.OnClickListener() {
@@ -115,36 +131,76 @@ public class Activity_ProductDetail extends AppCompatActivity {
                     public void onClick(View view) {
                         // set image for the clicked following stars
                         img_star1.setImageResource(R.drawable.rating_star);
+                        // when clicked a star will check if higher rating star are checked or not
+                        if(img_star2.getDrawable() != null && img_star2.getDrawable().getConstantState() != null && img_star2.getDrawable().getConstantState().equals(StarDrawable.getConstantState())
+                                || img_star3.getDrawable() != null && img_star3.getDrawable().getConstantState() != null && img_star3.getDrawable().getConstantState().equals(StarDrawable.getConstantState())
+                                || img_star4.getDrawable() != null && img_star4.getDrawable().getConstantState() != null && img_star4.getDrawable().getConstantState().equals(StarDrawable.getConstantState())
+                                || img_star5.getDrawable() != null && img_star5.getDrawable().getConstantState() != null && img_star5.getDrawable().getConstantState().equals(StarDrawable.getConstantState())){
+                            // if the condition is true then set all the higher rating star image to be unchecked star one
+                            img_star2.setImageResource(R.drawable.unchecked_rating_star);
+                            img_star3.setImageResource(R.drawable.unchecked_rating_star);
+                            img_star4.setImageResource(R.drawable.unchecked_rating_star);
+                            img_star5.setImageResource(R.drawable.unchecked_rating_star);
+                        }
                         // click a star will get it accordant rating score
+                        tv_userRatingScore.setText(ratingValue[0] + "/5");
+                        // click commit button will create a new rating for rating schema by the userID and phoneID
                         ReqAddRating reqAddRating = new ReqAddRating(userID, phoneID, ratingValue[0]);
-                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+                        btn_commit.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
-                                if(response.isSuccessful() && response.body() != null){
-                                    ResAddRating resAddRating = response.body();
-                                    tv_userRatingScore.setText(ratingValue[0] + "/5");
-                                    btn_commit.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(!resAddRating.getStatus().equals("true")){
+                            public void onClick(View view) {
+                                retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+                                    @Override
+                                    public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
+                                        if(response.isSuccessful() && response.body() != null){
+                                            ResAddRating resAddRating = response.body();
+                                            if(resAddRating.getStatus().equals("true")){
                                                 Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             } else {
                                                 Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             }
+                                        } else {
+                                            Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
                                         }
-                                    });
-                                } else {
-                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
-                                }
-                            }
+                                    }
 
-                            @Override
-                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
-                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                                    @Override
+                                    public void onFailure(Call<ResAddRating> call, Throwable throwable) {
+                                        Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                                    }
+                                });
                             }
                         });
+//                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+//                            @Override
+//                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
+//                                if(response.isSuccessful() && response.body() != null){
+//                                    ResAddRating resAddRating = response.body();
+//                                    tv_userRatingScore.setText(ratingValue[0] + "/5");
+//                                    btn_commit.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View view) {
+//                                            if(resAddRating.getStatus().equals("true")){
+//                                                Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
+//                                                dialog.dismiss();
+//                                            } else{
+//                                                Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
+//                                                dialog.dismiss();
+//                                            }
+//                                        }
+//                                    });
+//                                } else {
+//                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
+//                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+//                            }
+//                        });
                     }
                 });
 
@@ -154,34 +210,42 @@ public class Activity_ProductDetail extends AppCompatActivity {
                         // set image for the clicked following stars
                         img_star1.setImageResource(R.drawable.rating_star);
                         img_star2.setImageResource(R.drawable.rating_star);
+                        if(img_star3.getDrawable() != null && img_star3.getDrawable().getConstantState() != null && img_star3.getDrawable().getConstantState().equals(StarDrawable.getConstantState())
+                                || img_star4.getDrawable() != null && img_star4.getDrawable().getConstantState() != null && img_star4.getDrawable().getConstantState().equals(StarDrawable.getConstantState())
+                                || img_star5.getDrawable() != null && img_star5.getDrawable().getConstantState() != null && img_star5.getDrawable().getConstantState().equals(StarDrawable.getConstantState())){
+                            img_star3.setImageResource(R.drawable.unchecked_rating_star);
+                            img_star4.setImageResource(R.drawable.unchecked_rating_star);
+                            img_star5.setImageResource(R.drawable.unchecked_rating_star);
+                        }
                         // click a star will get it accordant rating score
+                        tv_userRatingScore.setText(ratingValue[1] + "/5");
+                        // click commit button will create a new rating for rating schema by the userID and phoneID
                         ReqAddRating reqAddRating = new ReqAddRating(userID, phoneID, ratingValue[1]);
-                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+                        btn_commit.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
-                                if(response.isSuccessful() && response.body() != null){
-                                    ResAddRating resAddRating = response.body();
-                                    tv_userRatingScore.setText(ratingValue[1] + "/5");
-                                    btn_commit.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(!resAddRating.getStatus().equals("true")){
+                            public void onClick(View view) {
+                                retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+                                    @Override
+                                    public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
+                                        if(response.isSuccessful() && response.body() != null){
+                                            ResAddRating resAddRating = response.body();
+                                            if(resAddRating.getStatus().equals("true")){
                                                 Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             } else {
                                                 Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             }
+                                        } else {
+                                            Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
                                         }
-                                    });
-                                } else {
-                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
-                                }
-                            }
+                                    }
 
-                            @Override
-                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
-                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                                    @Override
+                                    public void onFailure(Call<ResAddRating> call, Throwable throwable) {
+                                        Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                                    }
+                                });
                             }
                         });
                     }
@@ -194,34 +258,40 @@ public class Activity_ProductDetail extends AppCompatActivity {
                         img_star1.setImageResource(R.drawable.rating_star);
                         img_star2.setImageResource(R.drawable.rating_star);
                         img_star3.setImageResource(R.drawable.rating_star);
+                        if(img_star4.getDrawable() != null && img_star4.getDrawable().getConstantState() != null && img_star4.getDrawable().getConstantState().equals(StarDrawable.getConstantState())
+                                || img_star5.getDrawable() != null && img_star5.getDrawable().getConstantState() != null && img_star5.getDrawable().getConstantState().equals(StarDrawable.getConstantState())){
+                            img_star4.setImageResource(R.drawable.unchecked_rating_star);
+                            img_star5.setImageResource(R.drawable.unchecked_rating_star);
+                        }
                         // click a star will get it accordant rating score
+                        tv_userRatingScore.setText(ratingValue[2] + "/5");
+                        // click commit button will create a new rating for rating schema by the userID and phoneID
                         ReqAddRating reqAddRating = new ReqAddRating(userID, phoneID, ratingValue[2]);
-                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+                        btn_commit.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
-                                if(response.isSuccessful() && response.body() != null){
-                                    ResAddRating resAddRating = response.body();
-                                    tv_userRatingScore.setText(ratingValue[2] + "/5");
-                                    btn_commit.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(!resAddRating.getStatus().equals("true")){
+                            public void onClick(View view) {
+                                retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+                                    @Override
+                                    public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
+                                        if(response.isSuccessful() && response.body() != null){
+                                            ResAddRating resAddRating = response.body();
+                                            if(resAddRating.getStatus().equals("true")){
                                                 Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             } else {
                                                 Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             }
+                                        } else {
+                                            Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
                                         }
-                                    });
-                                } else {
-                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
-                                }
-                            }
+                                    }
 
-                            @Override
-                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
-                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                                    @Override
+                                    public void onFailure(Call<ResAddRating> call, Throwable throwable) {
+                                        Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                                    }
+                                });
                             }
                         });
                     }
@@ -235,34 +305,38 @@ public class Activity_ProductDetail extends AppCompatActivity {
                         img_star2.setImageResource(R.drawable.rating_star);
                         img_star3.setImageResource(R.drawable.rating_star);
                         img_star4.setImageResource(R.drawable.rating_star);
+                        if(img_star5.getDrawable() != null && img_star5.getDrawable().getConstantState() != null && img_star5.getDrawable().getConstantState().equals(StarDrawable.getConstantState())){
+                            img_star5.setImageResource(R.drawable.unchecked_rating_star);
+                        }
                         // click a star will get it accordant rating score
+                        tv_userRatingScore.setText(ratingValue[3] + "/5");
+                        // click commit button will create a new rating for rating schema by the userID and phoneID
                         ReqAddRating reqAddRating = new ReqAddRating(userID, phoneID, ratingValue[3]);
-                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+                        btn_commit.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
-                                if(response.isSuccessful() && response.body() != null){
-                                    ResAddRating resAddRating = response.body();
-                                    tv_userRatingScore.setText(ratingValue[3] + "/5");
-                                    btn_commit.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(!resAddRating.getStatus().equals("true")){
+                            public void onClick(View view) {
+                                retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+                                    @Override
+                                    public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
+                                        if(response.isSuccessful() && response.body() != null){
+                                            ResAddRating resAddRating = response.body();
+                                            if(resAddRating.getStatus().equals("true")){
                                                 Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             } else {
                                                 Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             }
+                                        } else {
+                                            Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
                                         }
-                                    });
-                                } else {
-                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
-                                }
-                            }
+                                    }
 
-                            @Override
-                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
-                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                                    @Override
+                                    public void onFailure(Call<ResAddRating> call, Throwable throwable) {
+                                        Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                                    }
+                                });
                             }
                         });
                     }
@@ -278,33 +352,34 @@ public class Activity_ProductDetail extends AppCompatActivity {
                         img_star4.setImageResource(R.drawable.rating_star);
                         img_star5.setImageResource(R.drawable.rating_star);
                         // click a star will get it accordant rating score
+                        tv_userRatingScore.setText(ratingValue[4] + "/5");
+                        // click commit button will create a new rating for rating schema by the userID and phoneID
                         ReqAddRating reqAddRating = new ReqAddRating(userID, phoneID, ratingValue[4]);
-                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+                        btn_commit.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
-                                if(response.isSuccessful() && response.body() != null){
-                                    ResAddRating resAddRating = response.body();
-                                    tv_userRatingScore.setText(ratingValue[4] + "/5");
-                                    btn_commit.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(!resAddRating.getStatus().equals("true")){
+                            public void onClick(View view) {
+                                retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
+                                    @Override
+                                    public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
+                                        if(response.isSuccessful() && response.body() != null){
+                                            ResAddRating resAddRating = response.body();
+                                            if(resAddRating.getStatus().equals("true")){
                                                 Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             } else {
                                                 Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                             }
+                                        } else {
+                                            Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
                                         }
-                                    });
-                                } else {
-                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
-                                }
-                            }
+                                    }
 
-                            @Override
-                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
-                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                                    @Override
+                                    public void onFailure(Call<ResAddRating> call, Throwable throwable) {
+                                        Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
+                                    }
+                                });
                             }
                         });
                     }
@@ -312,234 +387,6 @@ public class Activity_ProductDetail extends AppCompatActivity {
                 dialog.show();
             }
         });
-
-
-
-        // click to show the rating dialog
-        ratingImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        /// click to show the rating dialog
-        tv_productRating.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Activity_ProductDetail.this);
-                LayoutInflater inf = Activity_ProductDetail.this.getLayoutInflater();
-                View dialogView = inf.inflate(R.layout.dialog_user_rating, null);
-                builder.setView(dialogView);
-
-                AlertDialog dialog = builder.create();
-
-                ImageView img_star1, img_star2, img_star3, img_star4, img_star5;
-                TextView tv_userRatingScore;
-                Button btn_commit;
-                int[] ratingValue = {1, 2, 3, 4, 5};
-
-                img_star1 = dialogView.findViewById(R.id.img_star1);
-                img_star2 = dialogView.findViewById(R.id.img_star2);
-                img_star3 = dialogView.findViewById(R.id.img_star3);
-                img_star4 = dialogView.findViewById(R.id.img_star4);
-                img_star5 = dialogView.findViewById(R.id.img_star5);
-                tv_userRatingScore = dialogView.findViewById(R.id.tv_userRatingScore);
-                btn_commit = dialogView.findViewById(R.id.btn_commit);
-
-                img_star1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        img_star1.setImageResource(R.drawable.rating_star);
-                        ReqAddRating reqAddRating = new ReqAddRating(userID, phoneID, ratingValue[0]);
-                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
-                            @Override
-                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
-                                if(response.isSuccessful() && response.body() != null){
-                                    ResAddRating resAddRating = response.body();
-                                    tv_userRatingScore.setText(ratingValue[0] + "/5");
-                                    btn_commit.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(!resAddRating.getStatus().equals("true")){
-                                                Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            } else {
-                                                Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
-                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
-                            }
-                        });
-                    }
-                });
-
-                img_star2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        img_star1.setImageResource(R.drawable.rating_star);
-                        img_star2.setImageResource(R.drawable.rating_star);
-                        ReqAddRating reqAddRating = new ReqAddRating(userID, phoneID, ratingValue[1]);
-                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
-                            @Override
-                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
-                                if(response.isSuccessful() && response.body() != null){
-                                    ResAddRating resAddRating = response.body();
-                                    tv_userRatingScore.setText(ratingValue[1] + "/5");
-                                    btn_commit.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(!resAddRating.getStatus().equals("true")){
-                                                Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            } else {
-                                                Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
-                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
-                            }
-                        });
-                    }
-                });
-
-                img_star3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        img_star1.setImageResource(R.drawable.rating_star);
-                        img_star2.setImageResource(R.drawable.rating_star);
-                        img_star3.setImageResource(R.drawable.rating_star);
-                        ReqAddRating reqAddRating = new ReqAddRating(userID, phoneID, ratingValue[2]);
-                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
-                            @Override
-                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
-                                if(response.isSuccessful() && response.body() != null){
-                                    ResAddRating resAddRating = response.body();
-                                    tv_userRatingScore.setText(ratingValue[2] + "/5");
-                                    btn_commit.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(!resAddRating.getStatus().equals("true")){
-                                                Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            } else {
-                                                Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
-                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
-                            }
-                        });
-                    }
-                });
-
-                img_star4.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        img_star1.setImageResource(R.drawable.rating_star);
-                        img_star2.setImageResource(R.drawable.rating_star);
-                        img_star3.setImageResource(R.drawable.rating_star);
-                        img_star4.setImageResource(R.drawable.rating_star);
-                        ReqAddRating reqAddRating = new ReqAddRating(userID, phoneID, ratingValue[3]);
-                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
-                            @Override
-                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
-                                if(response.isSuccessful() && response.body() != null){
-                                    ResAddRating resAddRating = response.body();
-                                    tv_userRatingScore.setText(ratingValue[3] + "/5");
-                                    btn_commit.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(!resAddRating.getStatus().equals("true")){
-                                                Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            } else {
-                                                Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
-                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
-                            }
-                        });
-                    }
-                });
-
-                img_star5.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        img_star1.setImageResource(R.drawable.rating_star);
-                        img_star2.setImageResource(R.drawable.rating_star);
-                        img_star3.setImageResource(R.drawable.rating_star);
-                        img_star4.setImageResource(R.drawable.rating_star);
-                        img_star5.setImageResource(R.drawable.rating_star);
-                        ReqAddRating reqAddRating = new ReqAddRating(userID, phoneID, ratingValue[4]);
-                        retrofitService.addRating(token, reqAddRating).enqueue(new Callback<ResAddRating>() {
-                            @Override
-                            public void onResponse(Call<ResAddRating> call, Response<ResAddRating> response) {
-                                if(response.isSuccessful() && response.body() != null){
-                                    ResAddRating resAddRating = response.body();
-                                    tv_userRatingScore.setText(ratingValue[4] + "/5");
-                                    btn_commit.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if(!resAddRating.getStatus().equals("true")){
-                                                Toast.makeText(Activity_ProductDetail.this, "Cảm ơn bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            } else {
-                                                Toast.makeText(Activity_ProductDetail.this, "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    Log.e("Response", "Error: " + response.code() + " Message: " + response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResAddRating> call, Throwable throwable) {
-                                Log.e("API Failure", "Error: " + throwable.getMessage(), throwable);
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
-
 
         // show all information of a phone by it ID
         retrofitService.getOnePhone(token, phoneID).enqueue(new Callback<ResOnePhone>() {
@@ -683,7 +530,7 @@ public class Activity_ProductDetail extends AppCompatActivity {
             }
         });
 
-        // show average rating score of a product out of 5
+        // show average rating score of a product
         retrofitService.getRatingForPhone(token, phoneID).enqueue(new Callback<ResRating>() {
             @Override
             public void onResponse(Call<ResRating> call, Response<ResRating> response) {
@@ -692,9 +539,8 @@ public class Activity_ProductDetail extends AppCompatActivity {
                     tv_productRating.setText(resRating.getAverageRating() + "/5");
                     ArrayList<Ratings> ratingList = resRating.getRatings();
                     for(int i = 0; i< ratingList.size(); i++){
-                        if(ratingList.get(i).getUserID().equals(userID)){
-                            ratingImage.setClickable(false);
-                            tv_productRating.setClickable(false);
+                        if(ratingList.get(i).getUserID().equals(userID) && ratingList.get(i).getPhoneID().equals(phoneID)){
+//                            ratingSection.setClickable(false);
                         }
                     }
                     if(response.code() == 404){
@@ -711,5 +557,4 @@ public class Activity_ProductDetail extends AppCompatActivity {
             }
         });
     }
-
 }

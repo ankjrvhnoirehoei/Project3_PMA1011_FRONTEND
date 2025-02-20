@@ -97,27 +97,24 @@
                 android:textSize="20sp"
                 android:textStyle="bold"/>
             <LinearLayout
+                android:id="@+id/ratingSection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_weight="1"
                 android:clickable="true">
-                <ImageButton
+                <ImageView
                     android:id="@+id/ratingImage"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/rating_star"
-                    android:scaleType="centerCrop"
-                    android:backgroundTint="@color/white"
-                    android:clickable="true"/>
+                    android:src="@drawable/rating_star"/>
                 <TextView
                     android:id="@+id/tv_productRating"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="phoneRating"
                     android:gravity="start"
-                    android:textSize="20sp"
-                    android:clickable="true"/>
+                    android:textSize="20sp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -167,6 +164,6 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:layout_marginTop="30dp"
-            android:text="Moving to comment section"/>
+            android:text="Chuyển đến trang bình luận"/>
     </LinearLayout>
 </LinearLayout>

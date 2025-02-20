@@ -4,9 +4,9 @@ public class Ratings {
     private String ratingID;
     private String userID;
     private String phoneID;
-    private int ratingValue;
+    private float ratingValue;
 
-    public Ratings(String ratingID, String userID, String phoneID, int ratingValue) {
+    public Ratings(String ratingID, String userID, String phoneID, float ratingValue) {
         this.ratingID = ratingID;
         this.userID = userID;
         this.phoneID = phoneID;
@@ -37,11 +37,11 @@ public class Ratings {
         this.phoneID = phoneID;
     }
 
-    public int getRatingValue() {
+    public float getRatingValue() {
         return ratingValue;
     }
 
-    public void setRatingValue(int ratingValue) {
+    public void setRatingValue(float ratingValue) {
         this.ratingValue = ratingValue;
     }
 }
