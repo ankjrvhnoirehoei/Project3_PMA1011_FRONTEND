@@ -21,6 +21,12 @@
             android:name=".Activities.Activity_User_Bills_Full"
             android:exported="false" />
         <activity
+            android:name=".Activities.Activity_ProductDetail"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Activity_ProductCommentsSection"
+            android:exported="false"/>
+        <activity
             android:name=".Activities.Activity_Admin_Main"
             android:exported="false" />
         <activity

@@ -23,10 +23,12 @@ import java.util.ArrayList;
 public class Adapter_Home_All_Phones extends RecyclerView.Adapter<Adapter_Home_All_Phones.ViewHolder> {
     private final Context c;
     private ArrayList<ResPhone> listPhone;
+    private final OnClickListener listener;
 
-    public Adapter_Home_All_Phones(Context c, ArrayList<ResPhone> listPhone) {
+    public Adapter_Home_All_Phones(Context c, ArrayList<ResPhone> listPhone, OnClickListener listener) {
         this.c = c;
         this.listPhone = listPhone;
+        this.listener = listener;
     }
 
     @NonNull
@@ -78,6 +80,10 @@ public class Adapter_Home_All_Phones extends RecyclerView.Adapter<Adapter_Home_A
         return listPhone.size();
     }
 
+    public interface OnClickListener{
+        void onClick(View v, int position);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imgPhone;
         TextView txtPhoneName, txtPhonePrice;
@@ -87,15 +93,15 @@ public class Adapter_Home_All_Phones extends RecyclerView.Adapter<Adapter_Home_A
             imgPhone = itemView.findViewById(R.id.imgPhone);
             txtPhoneName = itemView.findViewById(R.id.txtPhoneName);
             txtPhonePrice = itemView.findViewById(R.id.txtPhonePrice);
-
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            int position = getAdapterPosition();
-            if(position != RecyclerView.NO_POSITION){
-            }
+//            int position = getAdapterPosition();
+//            if(position != RecyclerView.NO_POSITION){
+//            }
+            listener.onClick(v, getAdapterPosition());
         }
     }
 }

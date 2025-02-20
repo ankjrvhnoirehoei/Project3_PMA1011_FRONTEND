@@ -1,17 +1,25 @@
 package com.example.myapplication.Others;
 
+import com.example.myapplication.Models.ReqAddComment;
+import com.example.myapplication.Models.ReqAddRating;
 import com.example.myapplication.Models.ReqLogin;
+import com.example.myapplication.Models.ResAddComment;
+import com.example.myapplication.Models.ResAddRating;
+import com.example.myapplication.Models.ResBrand;
+import com.example.myapplication.Models.ResComment;
 import com.example.myapplication.Models.ReqSignup;
 import com.example.myapplication.Models.ReqUser;
 import com.example.myapplication.Models.ResBill;
 import com.example.myapplication.Models.ResBillDetails;
 import com.example.myapplication.Models.ResBillsFull;
 import com.example.myapplication.Models.ResLogin;
+import com.example.myapplication.Models.ResOnePhone;
 import com.example.myapplication.Models.ResPhone;
+import com.example.myapplication.Models.ResRating;
 import com.example.myapplication.Models.ResSignup;
+import com.example.myapplication.Models.ResType;
 import com.example.myapplication.Models.ResUser;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +50,34 @@ public interface RetrofitService {
     // get all phones
     @GET("phones/home")
     Call<List<ResPhone>> getAllPhones(@Header("Authorization") String token);  // Add the token header
+
+    // get all types
+    @GET("types/allTypes")
+    Call<List<ResType>> getAllTypes(@Header("Authorization") String token);
+
+    // get all brand
+    @GET("brands/allBrands")
+    Call<List<ResBrand>> getAllBrands(@Header("Authorization") String token);
+
+    // get a phone detail by phone id
+    @GET("phones/onePhone")
+    Call<ResOnePhone> getOnePhone(@Header("Authorization") String token, @Query("phoneID") String phoneID);
+
+    // get all comments for a phone by id
+    @GET("comments/phoneComment")
+    Call<ResComment> getAllCommentsForPhone(@Header("Authorization") String token, @Query("phoneID") String phoneID);
+
+    // get rating score for a phone by id
+    @GET("ratings/phoneRating")
+    Call<ResRating> getRatingForPhone(@Header("Authorization") String token, @Query("phoneID") String phoneID);
+
+    // add rating for a phone by userID
+    @POST("ratings/rate")
+    Call<ResAddRating> addRating(@Header("Authorization") String token, @Body ReqAddRating reqAddRating);
+
+    // add comment for a phone by userID
+    @POST("comments/comment")
+    Call<ResAddComment> addComment(@Header("Authorization") String token, @Body ReqAddComment reqAddComment);
 
     // get all users
     @GET("users/allUsers")
