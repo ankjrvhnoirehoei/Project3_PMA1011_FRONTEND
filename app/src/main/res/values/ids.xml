@@ -5,4 +5,12 @@
     <item name="phonePrice" type="id" />
     <item name="phoneSold" type="id" />
     <item name="logout" type="id" />
+    <item name="tabOrderStatus" type="id" />
+    <item name="tabAll" type="id" />
+    <item name="tabShipping" type="id" />
+    <item name="tabReceived" type="id" />
+    <item name="tabCanceled" type="id" />
+    <item name="rvOrders" type="id" />
+    <item name="tvVoucherInfo" type="id" />
+    <item name="btn_warranty" type="id" />
 </resources>

@@ -17,16 +17,7 @@
 
         <activity
             android:name=".Activities.Activity_UserProfile"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-
-        </activity>
-
-
+            android:exported="true"/>
 
         <activity
             android:name=".Activities.Activity_User_Bills_Full"
@@ -38,33 +29,33 @@
 
         <activity
             android:name=".Activities.Activity_Search"
-            android:exported="false"/>
+            android:exported="true"/>
 
         <activity
             android:name=".Activities.Activity_Login"
             android:exported="true">
-
-            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <activity
             android:name=".Activities.Activity_Order_History"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"/>
 
         <activity
             android:name=".Activities.Activity_Voucher"
             android:exported="false"/>
 
-
-
         <activity
             android:name=".Activities.Main"
-            android:exported="true">
+            android:exported="true"/>
 
-        </activity>
+        <!-- BỔ SUNG Activity_SignUp -->
+        <activity
+            android:name=".Activities.Activity_SignUp"
+            android:exported="true"/>
 
     </application>
-
 </manifest>

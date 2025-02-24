@@ -11,11 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.Models.ReqLogin;
 import com.example.myapplication.Models.ResLogin;
@@ -31,41 +27,40 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Activity_Login extends AppCompatActivity {
     EditText txtUsername, txtPassword;
     TextView btnSignup;
-    TextView btnLogin;
+    Button btnLogin;
     RetrofitService retrofitService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        txtPassword = findViewById(R.id.txtPassword);
+        // Ánh xạ các view
         txtUsername = findViewById(R.id.txtUsername);
+        txtPassword = findViewById(R.id.txtPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnSignup = findViewById(R.id.btnSignUp); // Đảm bảo ID đúng
 
+        // Cấu hình Retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         retrofitService = retrofit.create(RetrofitService.class);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = txtUsername.getText().toString().trim();
-                String password = txtPassword.getText().toString().trim();
-                if (validateInputs(username, password)) {
-                    login(username, password);
-                }
+        // Sự kiện khi nhấn nút "Đăng ký"
+        btnSignup.setOnClickListener(v -> {
+            Log.d("Activity_Login", "Nút Sign Up được bấm"); // Kiểm tra log
+            Intent intent = new Intent(Activity_Login.this, Activity_SignUp.class);
+            startActivity(intent);
+        });
 
-//                Intent intent = new Intent(Activity_Login.this, Main.class);
-//                startActivity(intent);
+        // Xử lý sự kiện đăng nhập
+        btnLogin.setOnClickListener(v -> {
+            String username = txtUsername.getText().toString().trim();
+            String password = txtPassword.getText().toString().trim();
+            if (validateInputs(username, password)) {
+                login(username, password);
             }
         });
     }
@@ -83,83 +78,49 @@ public class Activity_Login extends AppCompatActivity {
     }
 
     private void login(String username, String password) {
-        // Prepare the login request
         ReqLogin reqLogin = new ReqLogin(username, password);
-
-        // Make the login API call
         Call<ResLogin> call = retrofitService.Login(reqLogin);
+
         call.enqueue(new Callback<ResLogin>() {
             @Override
             public void onResponse(Call<ResLogin> call, Response<ResLogin> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    ResLogin resLogin = response.body();
+                if (!response.isSuccessful() || response.body() == null) {
+                    Toast.makeText(Activity_Login.this, "Invalid credentials. Please try again.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                    if (resLogin.getStatus().equals("true")) {
-                        // Check for the token and refreshToken
-                        String token = resLogin.getToken();
-                        String refreshToken = resLogin.getRefreshToken();
-
-                        if (token != null && refreshToken != null) {
-                            // Login successful
-                            handleLoginSuccess(resLogin);
-
-                            // Save token in SharedPreferences
-                            SharedPreferences preferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = preferences.edit();
-                            editor.putString("AuthToken", token);
-                            editor.putString("RefreshToken", refreshToken); // Save refresh token as well
-                            editor.apply();
-                        } else {
-                            // If tokens are missing, something went wrong, handle it
-                            Toast.makeText(Activity_Login.this, "Failed to retrieve tokens. Please try again.", Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        // Handle specific error messages from backend (banned, invalid credentials, etc.)
-                        String message = resLogin.getMessage();
-                        if (message.contains("banned")) {
-                            // User is banned
-                            Toast.makeText(Activity_Login.this, "Your account is banned. Please contact support.", Toast.LENGTH_LONG).show();
-                        } else {
-                            // Handle other error cases
-                            Toast.makeText(Activity_Login.this, message, Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                ResLogin resLogin = response.body();
+                if ("true".equals(resLogin.getStatus())) {
+                    saveTokens(resLogin.getToken(), resLogin.getRefreshToken());
+                    handleLoginSuccess(username);
                 } else {
-                    // Handle HTTP status codes, especially 403 for banned users
-                    if (response.code() == 403) {
-                        Toast.makeText(Activity_Login.this, "Your account is banned. Please contact support.", Toast.LENGTH_LONG).show();
-                    } else {
-                        // Handle other response errors (like 401 unauthorized, etc.)
-                        Toast.makeText(Activity_Login.this, "Invalid credentials. Please try again.", Toast.LENGTH_SHORT).show();
-                    }
+                    handleLoginError(resLogin.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<ResLogin> call, Throwable t) {
-                // Show failure message (network issues, etc.)
                 Toast.makeText(Activity_Login.this, "Login failed: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.e("API ERROR: ", t.getMessage());
             }
         });
     }
 
+    private void saveTokens(String token, String refreshToken) {
+        SharedPreferences preferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("AuthToken", token);
+        editor.putString("RefreshToken", refreshToken);
+        editor.apply();
+    }
 
-    private void handleLoginSuccess(ResLogin resLogin) {
-        // Message on success
-        if (txtUsername.getText().toString().equals("admin") && txtPassword.getText().toString().equals("admin")) {
-            Log.d("LoginActivity", "Admin login detected");
-            Toast.makeText(Activity_Login.this, "Admin login successful!", Toast.LENGTH_SHORT).show();
-            Toast.makeText(Activity_Login.this, "Login successful!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Activity_Login.this, Activity_Admin_Main.class);
-            startActivity(intent);
-            finish();
-        } else {
-            Log.d("LoginActivity", "Regular user login detected");
-            Toast.makeText(Activity_Login.this, "Login successful!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Activity_Login.this, Main.class);
-            startActivity(intent);
-            finish(); // Close this activity so the user cannot go back to login screen
-        }
+    private void handleLoginSuccess(String username) {
+        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(Activity_Login.this, Main.class));
+        finish();
+    }
+
+    private void handleLoginError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
