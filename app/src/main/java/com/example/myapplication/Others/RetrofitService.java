@@ -92,5 +92,11 @@ public interface RetrofitService {
             @Header("Authorization") String authToken,
             @Query("searchPhones") String searchQuery
     );
+    @GET("sort") // API GET request
+    Call<List<ResPhone>> sortPhones(
+            @Header("Authorization") String token,
+            @Query("sortBy") String sortBy
+    );
+
 
 }

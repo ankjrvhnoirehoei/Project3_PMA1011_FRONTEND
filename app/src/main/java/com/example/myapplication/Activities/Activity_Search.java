@@ -1,12 +1,8 @@
 package com.example.myapplication.Activities;
 
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -25,7 +21,8 @@ import com.example.myapplication.Models.ResPhone;
 import com.example.myapplication.Others.RetrofitService;
 import com.example.myapplication.R;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,126 +32,94 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Activity_Search extends AppCompatActivity {
-
     private RecyclerView recyclerView;
     private Adapter_Phones phoneAdapter;
     private RetrofitService retrofitService;
     private ProgressBar progressBar;
     private TextView txtNoResult;
-    private static final String TAG = "Activity_Search";
-    private Handler searchHandler = new Handler();
-    private Runnable searchRunnable;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(findViewById(R.id.toolbar));
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        phoneAdapter = new Adapter_Phones(new ArrayList<>());
+        recyclerView.setAdapter(phoneAdapter);
+
         progressBar = findViewById(R.id.progressBar);
         txtNoResult = findViewById(R.id.txtNoResult);
 
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofitService = new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        retrofitService = retrofit.create(RetrofitService.class);
+                .build()
+                .create(RetrofitService.class);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
-
+        getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchPhones(query);
-                return false;
+                if (!query.trim().isEmpty()) searchPhones(query);
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (searchRunnable != null) {
-                    searchHandler.removeCallbacks(searchRunnable);
-                }
-                searchRunnable = () -> searchPhones(newText);
-                searchHandler.postDelayed(searchRunnable, 500); // Giảm tần suất gọi API
-                return false;
+                if (newText.trim().isEmpty()) clearResults();
+                return true;
             }
         });
         return true;
     }
 
     private void searchPhones(String query) {
-        if (query.isEmpty()) {
-            recyclerView.setAdapter(null);
-            txtNoResult.setVisibility(View.GONE);
-            return;
-        }
+        showLoading(true);
 
-        String token = getSavedToken();
-        if (token.isEmpty()) {
-            Toast.makeText(this, "Bạn chưa đăng nhập!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        token = "Bearer " + token;
-
-        progressBar.setVisibility(View.VISIBLE);
-        txtNoResult.setVisibility(View.GONE);
-
-        Call<List<ResPhone>> call = retrofitService.searchPhones(token, query);
-        call.enqueue(new Callback<List<ResPhone>>() {
+        retrofitService.searchPhones("Bearer " + getToken(), query).enqueue(new Callback<List<ResPhone>>() {
             @Override
-            public void onResponse(Call<List<ResPhone>> call, Response<List<ResPhone>> response) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "API Response Code: " + response.code());
-
-                if (response.isSuccessful() && response.body() != null) {
-                    List<ResPhone> phoneList = response.body();
-                    if (phoneList.isEmpty()) {
-                        txtNoResult.setVisibility(View.VISIBLE);
-                        recyclerView.setAdapter(null);
-                    } else {
-                        phoneAdapter = new Adapter_Phones(phoneList);
-                        recyclerView.setAdapter(phoneAdapter);
-                    }
+            public void onResponse(@NonNull Call<List<ResPhone>> call, @NonNull Response<List<ResPhone>> response) {
+                showLoading(false);
+                List<ResPhone> phones = response.body();
+                if (response.isSuccessful() && phones != null && !phones.isEmpty()) {
+                    phoneAdapter.updateData(phones);
+                    txtNoResult.setVisibility(View.GONE);
                 } else {
-                    showApiError(response);
+                    clearResults();
+                    Toast.makeText(Activity_Search.this, "Không tìm thấy sản phẩm!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<ResPhone>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Log.e(TAG, "Kết nối thất bại: " + t.getMessage());
-                Toast.makeText(Activity_Search.this, "Kết nối thất bại: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Call<List<ResPhone>> call, @NonNull Throwable t) {
+                showLoading(false);
+                Toast.makeText(Activity_Search.this, "Lỗi kết nối!", Toast.LENGTH_SHORT).show();
+                Log.e("API Error", "Lỗi: " + t.getMessage());
             }
         });
     }
 
-    private void showApiError(Response<?> response) {
-        try {
-            String errorBody = response.errorBody().string();
-            Log.e(TAG, "Lỗi từ API: " + errorBody);
-            Toast.makeText(Activity_Search.this, "Lỗi API: " + errorBody, Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            Log.e(TAG, "Không thể đọc lỗi API", e);
-        }
+    private void clearResults() {
+        phoneAdapter.updateData(Collections.emptyList());
+        txtNoResult.setVisibility(View.VISIBLE);
     }
 
-    private String getSavedToken() {
-        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        return prefs.getString("token", "");
+    private void showLoading(boolean isLoading) {
+        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+    }
+
+    private String getToken() {
+        return getSharedPreferences("MyPrefs", MODE_PRIVATE).getString("token", "");
     }
 
     @Override

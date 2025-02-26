@@ -90,6 +90,11 @@ public class Activity_Orders extends AppCompatActivity {
         public Call<List<ResPhone>> searchPhones(String authToken, String searchQuery) {
             return null;
         }
+
+        @Override
+        public Call<List<ResPhone>> sortPhones(String token, String sortBy) {
+            return null;
+        }
     }; // ✅ Không dùng getInstance()
 
     @Override

@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/sort_price"
+        android:title="Sắp xếp theo giá"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sort_sold"
+        android:title="Sắp xếp theo số lượng bán"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sort_stock"
+        android:title="Sắp xếp theo tồn kho"
+        app:showAsAction="never" />
+</menu>

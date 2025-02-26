@@ -38,6 +38,7 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
         <activity
@@ -56,6 +57,13 @@
         <activity
             android:name=".Activities.Activity_SignUp"
             android:exported="true"/>
+
+        <!-- Nếu muốn Activity_Sort là màn hình chính -->
+        <activity
+            android:name=".Activities.Activity_Sort"
+            android:exported="true">
+
+        </activity>
 
     </application>
 </manifest>
