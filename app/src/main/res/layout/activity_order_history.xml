@@ -48,7 +48,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@drawable/bg_filter_group"
         android:padding="4dp"
         android:elevation="4dp">
 
@@ -58,9 +57,10 @@
             android:layout_weight="1"
             android:layout_height="50dp"
             android:text="Tất Cả"
-            android:background="@drawable/bg_button_filter"
+            android:background="@drawable/bg_button_white"
             android:textColor="#000000"
-            android:textSize="13sp"/>
+            android:textSize="13sp"
+            android:backgroundTint="@null"/>
 
         <Button
             android:id="@+id/btn_in_transit"
@@ -68,9 +68,10 @@
             android:layout_weight="1"
             android:layout_height="50dp"
             android:text="Đang Giao"
-            android:background="@drawable/bg_button_filter"
+            android:background="@drawable/bg_button_white"
             android:textColor="#000000"
-            android:textSize="13sp"/>
+            android:textSize="13sp"
+            android:backgroundTint="@null"/>
 
         <Button
             android:id="@+id/btn_canceled"
@@ -78,9 +79,10 @@
             android:layout_weight="1"
             android:layout_height="50dp"
             android:text="Đã Hủy"
-            android:background="@drawable/bg_button_filter"
+            android:background="@drawable/bg_button_white"
             android:textColor="#000000"
-            android:textSize="13sp"/>
+            android:textSize="13sp"
+            android:backgroundTint="@null"/>
 
         <Button
             android:id="@+id/btn_received"
@@ -88,9 +90,10 @@
             android:layout_weight="1"
             android:layout_height="50dp"
             android:text="Đã Nhận"
-            android:background="@drawable/bg_button_filter"
+            android:background="@drawable/bg_button_white"
             android:textColor="#000000"
-            android:textSize="13sp"/>
+            android:textSize="13sp"
+            android:backgroundTint="@null"/>
     </LinearLayout>
 
     <!-- RecyclerView hiển thị danh sách đơn hàng -->

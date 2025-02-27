@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Thông tin người dùng -->
+
         <LinearLayout
             android:id="@+id/userInfoLayout"
             android:layout_width="match_parent"

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Khi nhấn -->
     <item android:state_pressed="true">
         <shape>
-            <corners android:radius="8dp"/>  <!-- Giảm bo góc để vuông hơn -->
-            <solid android:color="#E0E0E0"/>  <!-- Màu xám nhạt khi bấm -->
+            <solid android:color="#E0E0E0"/>  <!-- Màu xám khi bấm -->
+            <corners android:radius="8dp"/>
         </shape>
     </item>
+
+    <!-- Trạng thái bình thường -->
     <item>
         <shape>
-            <corners android:radius="8dp"/>  <!-- Giữ góc vuông nhẹ -->
-            <solid android:color="#FFFFFF"/>  <!-- Màu trắng mặc định -->
-            <stroke android:width="2dp" android:color="#BDBDBD"/>  <!-- Viền xám nhẹ -->
+            <solid android:color="#FFFFFF"/>  <!-- Màu trắng -->
+            <corners android:radius="8dp"/>
+            <stroke android:width="2dp" android:color="#BDBDBD"/>  <!-- Viền xám -->
         </shape>
     </item>
 </selector>

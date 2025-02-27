@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.Activities.Activity_Login;
 import com.example.myapplication.Activities.Activity_Order_History;
 import com.example.myapplication.Activities.Activity_UserProfile;
-import com.example.myapplication.Activities.Activity_Voucher;
+
 import com.example.myapplication.Models.ResUser;
 import com.example.myapplication.Others.RetrofitService;
 import com.example.myapplication.R;
@@ -92,7 +92,7 @@ public class Fragment_User extends Fragment {
             startActivityForResult(intent, 1);
         });
 
-        voucherButton.setOnClickListener(v -> startActivity(new Intent(requireActivity(), Activity_Voucher.class)));
+
         orderHistoryButton.setOnClickListener(v -> startActivity(new Intent(requireActivity(), Activity_Order_History.class)));
         logoutButton.setOnClickListener(v -> logout());
 
