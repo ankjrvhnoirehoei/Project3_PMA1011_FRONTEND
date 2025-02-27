@@ -7,10 +7,9 @@
     android:background="@color/white"
     tools:context=".Fragments.Fragment_Home">
 
-<!--  Sort button to sort all phones by brands, prices, ratings,
-  comments count, types-->
-<!--  Banner to display the newest phone  -->
-
+    <!--  Sort button to sort all phones by brands, prices, ratings,
+      comments count, types-->
+    <!--  Banner to display the newest phone  -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,7 +53,7 @@
                 android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
-<!--  All phones displayed  -->
+    <!--  All phones displayed  -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

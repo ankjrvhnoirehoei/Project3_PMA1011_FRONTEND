@@ -66,6 +66,7 @@ public class Fragment_Home extends Fragment {
                         // Set the adapter with the retrieved movie list
                         Log.d("Response", "Phones received: " + response.body().size());
                         Log.d("Phones List", response.body().toString());
+
                         phoneList = new ArrayList<>(response.body());
                             Adapter_Home_All_Phones adapter = new Adapter_Home_All_Phones(getContext(), phoneList, listener);
                         rvPhone.setAdapter(adapter);

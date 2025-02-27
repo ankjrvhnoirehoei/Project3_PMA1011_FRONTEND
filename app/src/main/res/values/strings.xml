@@ -2,4 +2,15 @@
     <string name="app_name">My Application</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="sort_options_price">
+        <item>Mặc định</item>
+        <item>Giá tăng dần</item>
+        <item>Giá giảm dần</item>
+    </string-array>
+
+    <string-array name="sort_options_name">
+        <item>Sắp xếp theo tên</item>
+        <item>Sắp xếp theo số tiền giảm giá</item>
+    </string-array>
 </resources>

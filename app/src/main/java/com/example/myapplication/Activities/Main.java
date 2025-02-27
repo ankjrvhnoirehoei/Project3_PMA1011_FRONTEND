@@ -61,23 +61,11 @@ public class Main extends AppCompatActivity {
         });
     }
 
-    @Override
+        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.toolbarNotification) {
 
-            return true;
-
-        } else if (item.getItemId() == R.id.toolbarSearch) {
-            startActivity(new Intent(Main.this, Activity_Search.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
