@@ -35,7 +35,7 @@ import retrofit2.http.Query;
 public interface RetrofitService {
     //https://project3-pma1011-backend-q2ql.onrender.com
     //https://project3-pma1011-backend.onrender.com
-    public static final String BASE_URL = "https://project3-pma1011-backend-q2ql.onrender.com";
+    public static final String BASE_URL = "https://project3-pma1011-backend.onrender.com";
 
     // login api
     @POST("users/login")
