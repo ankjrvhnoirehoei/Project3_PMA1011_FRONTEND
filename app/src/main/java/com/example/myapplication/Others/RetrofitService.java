@@ -111,4 +111,11 @@ public interface RetrofitService {
             @Query("userID") String userID
     );
 
+    // sort a phone list by the parameter
+    @GET("phones/sort")
+    Call<List<ResPhone>> sortPhones(@Header("Authorization") String token, @Query("sortBy") String sortBy);
+
+    // search phones by brand, type and phone name
+    @GET("phones/findPhones")
+    Call<List<ResPhone>> findPhones(@Header("Authorization") String token, @Query("searchPhones") String searchPhones);
 }
