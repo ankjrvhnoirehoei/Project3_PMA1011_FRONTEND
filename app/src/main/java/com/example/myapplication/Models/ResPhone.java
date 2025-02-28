@@ -1,6 +1,7 @@
 package com.example.myapplication.Models;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ResPhone {
     private String phoneID;
@@ -127,5 +128,32 @@ public class ResPhone {
 
     public void setPhoneInStore(int phoneInStore) {
         this.phoneInStore = phoneInStore;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Nếu cùng tham chiếu
+        if (obj == null || getClass() != obj.getClass()) return false; // Nếu không cùng kiểu
+        ResPhone resPhone = (ResPhone) obj;
+
+        // So sánh tất cả các thuộc tính
+        return Float.compare(resPhone.phonePrice, phonePrice) == 0 &&
+                phoneSold == resPhone.phoneSold &&
+                phoneStock == resPhone.phoneStock &&
+                phoneWarranty == resPhone.phoneWarranty &&
+                phoneInStore == resPhone.phoneInStore &&
+                Objects.equals(phoneID, resPhone.phoneID) &&
+                Objects.equals(image, resPhone.image) &&
+                Objects.equals(phoneColor, resPhone.phoneColor) &&
+                Objects.equals(phoneName, resPhone.phoneName) &&
+                Objects.equals(phoneBrand, resPhone.phoneBrand) &&
+                Objects.equals(phoneType, resPhone.phoneType) &&
+                Objects.equals(phoneDescription, resPhone.phoneDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(phoneID, image, phoneColor, phoneName, phonePrice, phoneBrand, phoneType, phoneSold,
+                phoneDescription, phoneStock, phoneWarranty, phoneInStore);
     }
 }

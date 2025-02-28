@@ -31,6 +31,11 @@ public class Adapter_Home_All_Phones extends RecyclerView.Adapter<Adapter_Home_A
         this.listener = listener;
     }
 
+    public void setFilteredList(ArrayList<ResPhone> filteredList){
+        this.listPhone = filteredList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public Adapter_Home_All_Phones.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
