@@ -540,7 +540,7 @@ public class Activity_ProductDetail extends AppCompatActivity {
                     ArrayList<Ratings> ratingList = resRating.getRatings();
                     for(int i = 0; i< ratingList.size(); i++){
                         if(ratingList.get(i).getUserID().equals(userID) && ratingList.get(i).getPhoneID().equals(phoneID)){
-//                            ratingSection.setClickable(false);
+                            ratingSection.setClickable(false);
                         }
                     }
                     if(response.code() == 404){
