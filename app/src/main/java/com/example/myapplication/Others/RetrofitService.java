@@ -5,6 +5,7 @@ import com.example.myapplication.Models.ReqAddRating;
 import com.example.myapplication.Models.ReqLogin;
 import com.example.myapplication.Models.ResAddComment;
 import com.example.myapplication.Models.ResAddRating;
+import com.example.myapplication.Models.ResBill;
 import com.example.myapplication.Models.ResBrand;
 import com.example.myapplication.Models.ResComment;
 import com.example.myapplication.Models.ReqSignup;
@@ -118,4 +119,7 @@ public interface RetrofitService {
     // search phones by brand, type and phone name
     @GET("phones/findPhones")
     Call<List<ResPhone>> findPhones(@Header("Authorization") String token, @Query("searchPhones") String searchPhones);
+
+    @GET("bills/all")
+    Call<List<ResBill>> allBills(@Header("Authorization") String token);
 }
