@@ -83,7 +83,8 @@
                     android:textSize="15sp"
                     android:padding="8dp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    android:clickable="true"/>
 
                 <TextView
                     android:id="@+id/btnStopSelling"

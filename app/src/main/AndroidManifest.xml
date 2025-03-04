@@ -15,6 +15,9 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.Activity_User_Profile"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Activity_ProductCommentsSection"
             android:exported="false" />
         <activity
@@ -25,6 +28,9 @@
             android:exported="false" />
         <activity
             android:name=".Activities.Activity_Search"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Activity_User_Bills_Full"
             android:exported="false" />
         <activity
             android:name=".Activities.Activity_Login"

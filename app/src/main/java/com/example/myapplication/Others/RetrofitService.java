@@ -122,4 +122,7 @@ public interface RetrofitService {
 
     @GET("bills/all")
     Call<List<ResBill>> allBills(@Header("Authorization") String token);
+
+    @GET("users/oneUser")
+    Call<ResUser> getOneUser(@Header("Authorization") String token, @Query("userID") String userID);
 }

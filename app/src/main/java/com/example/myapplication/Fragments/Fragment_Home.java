@@ -335,12 +335,30 @@ public class Fragment_Home extends Fragment {
             @Override
             public void onClick(View v, int position) {
                 Intent i = new Intent(getContext(), Activity_ProductDetail.class);
-                String phoneID = phoneList.get(position).getPhoneID();
-                preferences = requireContext().getSharedPreferences("AppPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("sharedPhoneID", phoneID);
-                editor.apply();
-                startActivity(i);
+                String phoneID;
+                if(filteredSearchList.isEmpty() && filteredSpinnerList.isEmpty()){
+                    phoneID = phoneList.get(position).getPhoneID();
+                    preferences = requireContext().getSharedPreferences("AppPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("sharedPhoneID", phoneID);
+                    editor.apply();
+                    startActivity(i);
+                } else if(!filteredSearchList.isEmpty() && filteredSpinnerList.isEmpty()){
+                    phoneID = filteredSearchList.get(position).getPhoneID();
+                    preferences = requireContext().getSharedPreferences("AppPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("sharedPhoneID", phoneID);
+                    editor.apply();
+                    startActivity(i);
+                } else {
+                    phoneID = filteredSpinnerList.get(position).getPhoneID();
+                    preferences = requireContext().getSharedPreferences("AppPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("sharedPhoneID", phoneID);
+                    editor.apply();
+                    startActivity(i);
+                }
+                //String phoneID = phoneList.get(position).getPhoneID();
             }
         };
     }
